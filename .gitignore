@@ -1,0 +1,13 @@
+SceneGraph/SceneGraph/Debug/
+SceneGraph/SceneGraph.ncb
+SceneGraph/SceneGraph.suo
+SceneGraph/debug/
+obj
+bin
+*.suo
+*.ncb
+*.htm
+*.idb
+*.pdb
+*.ilk
+*.exe
