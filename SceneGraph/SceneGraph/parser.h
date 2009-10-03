@@ -136,11 +136,19 @@ static Mesh* ParseEXTRUDE(const std::string& filename){
 	char c;
 	float distance, points;
 	vector<vec3> extr_v;
-	
+	int counter = 0;
+
 	ifstream ifs(filename.c_str());
 	
 	if(ifs.is_open()){
 		cout <<"READ\n";
+
+		getline(ifs, line);
+		
+		if(line.compare("extrusion") != 0 ){
+			cout << "Invalid file, first line has to say extrusion\n";
+			return m;
+		}
 
 		getline(ifs, line);
 		istringstream stringstream(line);
@@ -177,11 +185,15 @@ static Mesh* ParseEXTRUDE(const std::string& filename){
 			/*cout<<"x = "<<x<<" y = "<<y<<" z = "<<z<<endl;*/
 			vec3 v(x,y,z);
 			extr_v.push_back(v);
+			counter++;
 
 			//cout<<"\n";
 			
 		}
-
+		if(counter != points){
+			cout << "Invalid file, invalid number of points\n";
+			return m;
+		}
 		Extrude* extrude = new Extrude(extr_v,distance,points);
 		m = extrude->createMesh();
 		ifs.close();
@@ -199,6 +211,7 @@ static Mesh* ParseSURFREV(const std::string& filename){
 	char c;
 	float slices, points;
 	vector<vec3> surf_v;
+	int counter = 0;
 	
 	ifstream ifs(filename.c_str());
 	
@@ -206,10 +219,22 @@ static Mesh* ParseSURFREV(const std::string& filename){
 		cout <<"READ\n";
 
 		getline(ifs, line);
+		cout<<line;
+		if(line.compare("surfrev") != 0 ){
+			cout << "Invalid file, first line has to say surfrev\n";
+			return m;
+		}
+
+		getline(ifs, line);
 		istringstream stringstream(line);
 		stringstream.unsetf(ios_base::skipws);
 
 		stringstream >> std::ws>>slices;
+
+		if(slices<3){
+			cout << "Invalid file, need more than 3 slices\n";
+			return m;
+		}
 
 		getline(ifs, line);
 		istringstream stringstream2(line);
@@ -237,14 +262,23 @@ static Mesh* ParseSURFREV(const std::string& filename){
 				cout << "Corrupted file\n";
 				return m;
 			}
+			if(x<0){
+				cout << "Invalid x values\n";
+				return m;
+			}
 			/*cout<<"x = "<<x<<" y = "<<y<<" z = "<<z<<endl;*/
 			vec3 v(x,y,z);
 			surf_v.push_back(v);
+			counter++;
 
 			//cout<<"\n";
 			
 		}
 
+		if(counter != points){
+			cout << "Invalid file, invalid number of points\n";
+			return m;
+		}
 		Surfrev* surf = new Surfrev(surf_v,slices,points);
 		m = surf->createMesh();
 		ifs.close();
