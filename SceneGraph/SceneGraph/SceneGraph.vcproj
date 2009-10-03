@@ -228,18 +228,6 @@
 					Name="Objects"
 					>
 					<File
-						RelativePath=".\cabinet.h"
-						>
-					</File>
-					<File
-						RelativePath=".\chair.h"
-						>
-					</File>
-					<File
-						RelativePath=".\desk.h"
-						>
-					</File>
-					<File
 						RelativePath=".\lamp.h"
 						>
 					</File>
