@@ -52,6 +52,10 @@ void
 Controller::addNode(string n, int t, int s){
 	ObjectNode* newNode = new ObjectNode(n,t,s);
 	selected->addChild(newNode);
+
+	if(t==1)
+		newNode->chair_construct();
+
 	PrintGraph();
 }
 

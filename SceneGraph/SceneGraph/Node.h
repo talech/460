@@ -28,7 +28,7 @@ using namespace std;
 
 enum objectType{ROOT,OBJECT,SHAPE,MESHO,LIGHT};
 enum object{RootNode,Chair,Desk,Lamp,Cabinet,Sphere,
-			Cube,Cylinder,Half,Disk,MeshO,Monitor,Light};
+			Cube,Cylinder,Half,Disk,MeshO,Monitor,Light,Object};
 static GLuint texture[2];
 //Abstract Class Node
 class Node{
@@ -122,6 +122,8 @@ protected:
 	
 	bool haveTexture;
 	double mat[5][16];
+
+	
 	
 	
 	
@@ -160,6 +162,9 @@ public:
 		for(int i=0; i<16; i++)
 			m[i] = mat[k][i];
 	}
+
+	//Object Creation
+	void chair_construct();
 	
 	
 

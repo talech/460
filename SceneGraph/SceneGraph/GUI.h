@@ -45,6 +45,9 @@ private:
 	inputButton* translate;
 	inputButton* rotate2;
 	inputButton* scales;
+	
+	
+	
 	Fl_Value_Slider* diffuse;
 	Fl_Value_Slider* specular;
 	Fl_Value_Slider* reflection;

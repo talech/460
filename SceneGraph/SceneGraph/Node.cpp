@@ -158,7 +158,7 @@ ObjectNode::drawObject(int select){
 
 void
 ObjectNode::drawMe(int select){
-	if(type != Light){
+	if(type != Light && shape != Object){
 		glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
 		
 		/*std::cout<<"MAT NODE:\n"; 
@@ -168,14 +168,8 @@ ObjectNode::drawMe(int select){
 		std::cout<<"\n";*/
 		GLfloat color[] = {transforms->getR(), transforms->getG(), transforms->getB(), 1.0};
 		GLfloat color2[] = {transforms->getR2(), transforms->getG2(), transforms->getB2(), 1.0};
-		if(type == Chair){
-			if(selected && select == 2)
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color2);
-			else
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color);
-			drawChair();
-		}
-		else if(type == Desk){
+		
+		if(type == Desk){
 			if(selected && select == 2)
 				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color2);
 			else
@@ -387,4 +381,63 @@ ObjectNode::LoadGLTextures(char* Filename, int num){							// Load Bitmaps And C
 	//	free(TextureImage[0]);								// Free The Image Structure
 	//}
 	return Status;										// Return The Status
+}
+
+
+
+//Chair Constructor
+void 
+ObjectNode::chair_construct(){
+	ObjectNode* seat = new ObjectNode("Cube",6,2);
+	seat->transforms->setTransY(0.9);
+	seat->transforms->setScaleY(0.2);
+	children.push_back(seat);
+	seat->setParent(this);
+
+	ObjectNode* backrest = new ObjectNode("Cube",6,2);
+	backrest->transforms->setTransX(-0.4);
+	backrest->transforms->setTransY(1.5);
+	backrest->transforms->setScaleX(0.2);
+	children.push_back(backrest);
+	backrest->setParent(this);
+
+	ObjectNode* leg1 = new ObjectNode("Cube",6,2);
+	leg1->transforms->setTransX(0.4);
+	leg1->transforms->setTransY(0.4);
+	leg1->transforms->setTransZ(0.4);
+	leg1->transforms->setScaleX(0.2);
+	leg1->transforms->setScaleY(0.8);
+	leg1->transforms->setScaleZ(0.2);
+	children.push_back(leg1);
+	leg1->setParent(this);
+
+	ObjectNode* leg2 = new ObjectNode("Cube",6,2);
+	leg2->transforms->setTransX(-0.4);
+	leg2->transforms->setTransY(0.4);
+	leg2->transforms->setTransZ(0.4);
+	leg2->transforms->setScaleX(0.2);
+	leg2->transforms->setScaleY(0.8);
+	leg2->transforms->setScaleZ(0.2);
+	children.push_back(leg2);
+	leg2->setParent(this);
+
+	ObjectNode* leg3 = new ObjectNode("Cube",6,2);
+	leg3->transforms->setTransX(-0.4);
+	leg3->transforms->setTransY(0.4);
+	leg3->transforms->setTransZ(-0.4);
+	leg3->transforms->setScaleX(0.2);
+	leg3->transforms->setScaleY(0.8);
+	leg3->transforms->setScaleZ(0.2);
+	children.push_back(leg3);
+	leg3->setParent(this);
+
+	ObjectNode* leg4 = new ObjectNode("Cube",6,2);
+	leg4->transforms->setTransX(0.4);
+	leg4->transforms->setTransY(0.4);
+	leg4->transforms->setTransZ(-0.4);
+	leg4->transforms->setScaleX(0.2);
+	leg4->transforms->setScaleY(0.8);
+	leg4->transforms->setScaleZ(0.2);
+	children.push_back(leg4);
+	leg4->setParent(this);
 }
