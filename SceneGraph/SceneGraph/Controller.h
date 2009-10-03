@@ -55,6 +55,14 @@ public:
 	void setDiffuse(float d){ selected->transforms->setDiffuse(d);}
 	void setSpecular(float s){ selected->transforms->setSpecular(s);}
 	void setReflection(float r){ selected->transforms->setReflection(r);}
+
+	void changeNodeType(string name, int t, int s);
+
+	//Special selections
+	void s_firstChild();
+	void s_parent();
+	void s_prevSib();
+	void s_nextSib();
 };
 
 

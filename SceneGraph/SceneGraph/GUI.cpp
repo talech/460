@@ -281,12 +281,12 @@ GUI::GUI(){
 		add->color(FL_GREEN);
 		add->callback((Fl_Callback*)addCB, this);
 
-		remove = new Fl_Button(290, 10, 80, 30, "&Remove");
+		remove = new Fl_Button(290, 10, 80, 30, "Remove");
 		remove->box(FL_PLASTIC_UP_BOX);
 		remove->color(FL_RED);
 		remove->callback((Fl_Callback*)removeCB, this);
 
-		clone = new Fl_Button(200, 10, 80, 30, "&Clone");
+		clone = new Fl_Button(200, 10, 80, 30, "Clone");
 		clone->box(FL_PLASTIC_UP_BOX);
 		clone->color(FL_DARK_MAGENTA);
 		clone->callback((Fl_Callback*)cloneCB, this);
@@ -301,7 +301,7 @@ GUI::GUI(){
 		render->color(FL_YELLOW);
 		render->callback((Fl_Callback*)renderCB, this);
 
-		transfMenu = new Fl_Menu_Button(20, 60, 80, 30, "&Edit");
+		transfMenu = new Fl_Menu_Button(20, 60, 80, 30, "Edit");
 		Fl_Menu_Item items_edit[] = {
 			{"Color"},
 			{"Translate"},

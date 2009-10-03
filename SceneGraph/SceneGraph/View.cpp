@@ -78,14 +78,7 @@ int View::handle(int e){
 	{
 		switch(Fl::event_key())
 		{
-			//case 'w':
-				//myCamera.rotateUpDown(5);
-				//redraw();
-				//break;
-			//case 's':
-				//myCamera.rotateUpDown(-5);
-				//break;
-			case 'd':
+			/*case 'd':
 				myCamera.rotateRightLeft(-2.5);
 				break;
 			case 'a':
@@ -96,9 +89,45 @@ int View::handle(int e){
 				break;
 			case 'w':
 				myCamera.zoom(-1);
-				break;
-			case 'n':
+				break;*/
+			case 'q':
 				control->NextNode();
+				break;
+			//select first child
+			case 's':
+				control->s_firstChild();
+				break;
+			//select parent
+			case 'w':
+				control->s_parent();
+				break;
+			//select parent
+			case 'a':
+				control->s_prevSib();
+				break;
+			//select parent
+			case 'd':
+				control->s_nextSib();
+				break;
+			//create empty node
+			case 'c':
+				control->addNode("Node",13,1);
+				break;
+			//erase selected node
+			case 'e':
+				control->removeNode();
+				break;
+			//change to sphere
+			case 'b':
+				control->changeNodeType("Sphere",5,2);
+				break;
+			//change to cube
+			case 'g':
+				control->changeNodeType("Cube",6,2);
+				break;
+			//change to empty node
+			case 'n':
+				control->changeNodeType("Node",13,1);
 				break;
 		}
 	}

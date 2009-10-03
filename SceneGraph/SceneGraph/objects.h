@@ -10,9 +10,21 @@ SceneGraph - Room Editor
 #define OBJECTS_H
 
 #include <iostream>
+#include "algebra3.h"
+
 #include "lamp.h"
 #include "shapes.h"
 #include "monitor.h"
+
+static vec4 getNormal(vec4 vert1, vec4 vert2, vec4 vert3){
+	vec4 a = vec4((vert2-vert1)[0], (vert2-vert1)[1], (vert2-vert1)[2],1);
+	vec4 b = vec4((vert3-vert1)[0], (vert3-vert1)[1], (vert3-vert1)[2],1);
+	vec4 res = a^b;
+	res = res/res.length();
+	res = res * (-1);
+	return res;
+}
+
 
 static void drawPlane(GLuint texture){
 	GLfloat red[] = {1.0, 0.0, 0.0, 1.0};

@@ -52,6 +52,7 @@ ObjectNode::ObjectNode(string n, int t, int s):Node(){
 	else if(type == Monitor)transforms->setColor(0.2,0.2,0.2);
 	else if(type == RootNode)transforms->setColor(0.4, 0.4, 1.0);
 	else if(type == MeshO) transforms->setColor(0.0,1.0,0.0);
+	else if(type == Object) transforms->setColor(0.9,0.9,0.9);
 	cout<<"Node '"<<name<<"' Created\n";
 }
 
@@ -121,6 +122,21 @@ ObjectNode::nextChild(ObjectNode *currentChild){
 			return this;
 		else
 			return children[num+1];
+	}
+	else{
+		return this;
+	}
+}
+
+ObjectNode*
+ObjectNode::prevChild(ObjectNode *currentChild){
+	int childs = this->numChildren();
+	if(childs>0){
+		int num = this->childNum(currentChild);
+		if(num-1 == -1)
+			return this;
+		else
+			return children[num-1];
 	}
 	else{
 		return this;
@@ -388,7 +404,12 @@ ObjectNode::LoadGLTextures(char* Filename, int num){							// Load Bitmaps And C
 	return Status;										// Return The Status
 }
 
-
+void
+ObjectNode::changeObjShape(string n, int t, int s){
+	name = n;
+	shape = s;
+	type = t;
+}
 
 //Chair Constructor
 void 

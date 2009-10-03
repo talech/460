@@ -60,6 +60,9 @@ Controller::addNode(string n, int t, int s){
 	else if(t==4)
 		newNode->cab_construct();
 	
+	selected->unSelect();
+	selected = newNode;
+	selected->setSelected();
 
 	PrintGraph();
 }
@@ -99,9 +102,9 @@ Controller::PrintHelp(ObjectNode* node){
 			cout<<" }";
 			selected = next;
 			if(node == selected)
-				cout<<"=>**"<<selected->nodeName()<<"**{ ";
+				cout<<"\n =>**"<<selected->nodeName()<<"**{ ";
 			else
-				cout<<"=>"<<selected->nodeName()<<"{ ";
+				cout<<"\n =>"<<selected->nodeName()<<"{ ";
 		}
 		else{
 			cout<<"}";
@@ -225,4 +228,59 @@ Controller::render(){
 	trace->InitRender();
 	trace->Render();
 }
+
+void
+Controller::changeNodeType(string name, int t, int s){
+	selected->changeObjShape(name,t,s);
+	PrintGraph();
+}
+
+
+//Special Selections
+void 
+Controller::s_firstChild(){
+	if(selected->numChildren() > 0){
+		selected->unSelect();
+		selected = selected->firstChild();
+		selected->setSelected();
+		this->PrintGraph();
+	}
+}
+
+void
+Controller::s_parent(){
+	if(selected != root){
+		selected->unSelect();
+		selected = selected->getParent();
+		selected->setSelected();
+		this->PrintGraph();
+	}
+}
+
+void
+Controller::s_prevSib(){
+	if(!selected->isRoot()){
+		ObjectNode* prev = selected->getParent()->prevChild(selected);
+		if(prev != selected->getParent()){
+			selected->unSelect();
+			selected = prev;
+			selected->setSelected();
+			this->PrintGraph();
+		}
+	}
+}
+
+void
+Controller::s_nextSib(){
+	if(!selected->isRoot()){
+		ObjectNode* next = selected->getParent()->nextChild(selected);
+		if(next != selected->getParent()){
+			selected->unSelect();
+			selected = next;
+			selected->setSelected();
+			this->PrintGraph();
+		}
+	}
+}
+
 

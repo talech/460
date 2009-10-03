@@ -147,11 +147,15 @@ public:
 	bool isRoot(){ return root;}
 	ObjectNode* getParent(){ return parent;}
 	ObjectNode* nextChild(ObjectNode* currentChild);
+	ObjectNode* prevChild(ObjectNode* currentChild);
 	ObjectNode* getChild(int i){return children[i];}
 	void drawObject(int select);
 	ObjectNode* firstChild(){ return children[0];}
 	int getShape(){return shape;}
 	int getObject(){return type;}
+
+	void changeObjShape(string n, int t, int s);
+
 	void cloneChildren(ObjectNode* newNodeParent);
 	
 	void addMesh(Mesh* m){myMesh = m;}
