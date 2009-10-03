@@ -59,12 +59,12 @@ public:
 	void setTransX(float num){translateX += num;}
 	void setTransY(float num){translateY += num;}
 	void setTransZ(float num){translateZ += num;}
-	void setScaleX(float num){scaleX = num;}
-	void setScaleY(float num){scaleY = num;}
-	void setScaleZ(float num){scaleZ = num;}
-	void setAngleX(float num){angleX = num;}
-	void setAngleY(float num){angleY = num;}
-	void setAngleZ(float num){angleZ = num;}
+	void setScaleX(float num){scaleX += num;}
+	void setScaleY(float num){scaleY += num;}
+	void setScaleZ(float num){scaleZ += num;}
+	void setAngleX(float num){angleX += num;}
+	void setAngleY(float num){angleY += num;}
+	void setAngleZ(float num){angleZ += num;}
 	void setColor(float numR, float numG, float numB){
 		color[0] = numR;
 		color[1] = numG;

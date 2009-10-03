@@ -5,6 +5,8 @@
 
 #include "View.h"
 #include <iostream>
+#include <cstring>
+#include <stdio.h>
 
 void View::init3D(){
 	float l0_dif[] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -74,61 +76,142 @@ int View::handle(int e){
 
 	int ret = Fl_Gl_Window::handle(e);
 
-	if(e == FL_KEYUP)
-	{
-		switch(Fl::event_key())
-		{
-			/*case 'd':
-				myCamera.rotateRightLeft(-2.5);
+	if(e == FL_KEYUP){
+		bool done = false;
+		switch(Fl::event_key()){
+			case FL_Shift_L:
+				done = true;
 				break;
-			case 'a':
-				myCamera.rotateRightLeft(2.5);
+			case FL_Shift_R:
 				break;
-			case 's':
-				myCamera.zoom(1);
-				break;
-			case 'w':
-				myCamera.zoom(-1);
-				break;*/
-			case 'q':
-				control->NextNode();
-				break;
-			//select first child
-			case 's':
-				control->s_firstChild();
-				break;
-			//select parent
-			case 'w':
-				control->s_parent();
-				break;
-			//select parent
-			case 'a':
-				control->s_prevSib();
-				break;
-			//select parent
-			case 'd':
-				control->s_nextSib();
-				break;
-			//create empty node
-			case 'c':
-				control->addNode("Node",13,1);
-				break;
-			//erase selected node
-			case 'e':
-				control->removeNode();
-				break;
-			//change to sphere
-			case 'b':
-				control->changeNodeType("Sphere",5,2);
-				break;
-			//change to cube
-			case 'g':
-				control->changeNodeType("Cube",6,2);
-				break;
-			//change to empty node
-			case 'n':
-				control->changeNodeType("Node",13,1);
-				break;
+		}
+		std::cout<<Fl::event_text()<<std::endl;
+
+		//decrease 'X'
+		if(!done && strcmp(Fl::event_text(),"x") == 0)
+			control->translate(-1,0,0);
+		//decrease 'Y'
+		else if(!done && strcmp(Fl::event_text(),"y") == 0)
+			control->translate(0,-1,0);
+		//decrease 'Z'
+		else if(!done && strcmp(Fl::event_text(),"z") == 0)
+			control->translate(0,0,-1);
+		//decrease 'X'
+		else if(!done && strcmp(Fl::event_text(),"j") == 0)
+			control->scale(-.2,0,0);
+		//decrease 'Y'
+		else if(!done && strcmp(Fl::event_text(),"k") == 0)
+			control->scale(0,-.2,0);
+		//decrease 'Z'
+		else if(!done && strcmp(Fl::event_text(),"l") == 0)
+			control->scale(0,0,-.2);
+
+		//decrease 'X'
+		else if(!done && strcmp(Fl::event_text(),"u") == 0)
+			control->rotate(-30,0,0);
+		//decrease 'Y'
+		else if(!done && strcmp(Fl::event_text(),"i") == 0)
+			control->rotate(0,-30,0);
+		//decrease 'Z'
+		else if(!done && strcmp(Fl::event_text(),"o") == 0)
+			control->rotate(0,0,-30);
+
+
+
+
+
+
+
+		else{
+			switch(Fl::event_key()){
+				/*case 'd':
+					myCamera.rotateRightLeft(-2.5);
+					break;
+				case 'a':
+					myCamera.rotateRightLeft(2.5);
+					break;
+				case 's':
+					myCamera.zoom(1);
+					break;
+				case 'w':
+					myCamera.zoom(-1);
+					break;*/
+				case 'q':
+					control->NextNode();
+					break;
+				//select first child
+				case 's':
+					control->s_firstChild();
+					break;
+				//select parent
+				case 'w':
+					control->s_parent();
+					break;
+				//select parent
+				case 'a':
+					control->s_prevSib();
+					break;
+				//select parent
+				case 'd':
+					control->s_nextSib();
+					break;
+				//create empty node
+				case 'c':
+					control->addNode("Node",13,1);
+					break;
+				//erase selected node
+				case 'e':
+					control->removeNode();
+					break;
+				//change to sphere
+				case 'b':
+					control->changeNodeType("Sphere",5,2);
+					break;
+				//change to cube
+				case 'g':
+					control->changeNodeType("Cube",6,2);
+					break;
+				//change to empty node
+				case 'n':
+					control->changeNodeType("Node",13,1);
+					break;
+				//increase x
+				case 'x':
+					control->translate(1,0,0);
+					break;
+				//increase y
+				case 'y':
+					control->translate(0,1,0);
+					break;
+				//increase 'z'
+				case 'z':
+					control->translate(0,0,1);
+					break;
+				//scale 'x'
+				case 'j':
+					control->scale(.2,0,0);
+					break;
+				//scale 'y'
+				case 'k':
+					control->scale(0,.2,0);
+					break;
+				//scale 'z'
+				case 'l':
+					control->scale(0,0,.2);
+					break;
+				//rotate 'x'
+				case 'u':
+					control->rotate(30,0,0);
+					break;
+				//rotate 'y'
+				case 'i':
+					control->rotate(0,30,0);
+					break;
+				//rotate 'z'
+				case 'o':
+					control->rotate(0,0,30);
+					break;
+			}	
 		}
 	}
 	

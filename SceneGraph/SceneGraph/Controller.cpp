@@ -11,10 +11,12 @@ SceneGraph - Room Editor
 using namespace std;
 
 Controller::Controller(){
-	root = new ObjectNode("Light",12,4);
+	root = new ObjectNode("Root Node",0,0);
 	root->setRoot();
 	selected = root;
-	root->setSelected();
+	
+	
+	/*root->setSelected();
 	root->transforms->setTransX(-5);
 	root->transforms->setTransY(10);
 	root->transforms->setTransZ(10);
@@ -22,7 +24,7 @@ Controller::Controller(){
 	root->transforms->setScaleY(.5);
 	root->transforms->setScaleZ(.5);
 
-	addNode("Root Node",0,0);
+	addNode("Root Node",0,0);*/
 	
 
 	//root->tex_2d = tex_2d;
@@ -231,14 +233,17 @@ Controller::render(){
 
 void
 Controller::changeNodeType(string name, int t, int s){
-	selected->changeObjShape(name,t,s);
-	PrintGraph();
+	if(selected != root){
+		selected->changeObjShape(name,t,s);
+		PrintGraph();
+	}
 }
 
 
 //Special Selections
 void 
 Controller::s_firstChild(){
+
 	if(selected->numChildren() > 0){
 		selected->unSelect();
 		selected = selected->firstChild();
