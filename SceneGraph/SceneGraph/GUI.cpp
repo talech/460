@@ -258,21 +258,16 @@ GUI::GUI(){
 		control = new Controller();	
 		view = new View(control);
 		
-		add = new Fl_Menu_Button(20, 10, 80, 30, "&Add");
+		add = new Fl_Menu_Button(20, 10, 80, 30, "Add");
 		Fl_Menu_Item items[] = {
 			{"&Objects",0,0,0,FL_SUBMENU},
 				{"chair"},
 				{"desk"},
-				{"lamp"},
 				{"cabinet"},
-				{"monitor"},
 				{0},
 			{"&Shapes",0,0,0,FL_SUBMENU},
 				{"sphere"},
 				{"cube"},
-				{"cylinder"},
-				{"half sphere"},
-				{"disk"},
 				{0},
 			{0}
 		};

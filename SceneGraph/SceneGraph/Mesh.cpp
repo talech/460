@@ -122,14 +122,14 @@ Mesh::Test_RayMeshIntersect(const double P0[], const double V0[],
 
 	for(int i=0; i<faces.size();i++){
 		int index = faces[i][0][1];
-		std::cout<<"\n\n------------------------\nINDEX i = "<<i<<std::endl;
+		/*std::cout<<"\n\n------------------------\nINDEX i = "<<i<<std::endl;*/
 		ps.clear();
 		for(int j = 0; j<faces[i].size();j++){
 			//std::cout<<faces[i].size()<<std::endl;
-			std::cout<<"\nVertex j = "<<j<<std::endl;
+			/*std::cout<<"\nVertex j = "<<j<<std::endl;
 			std::cout<<"Vector x : "<<i<<"= "<<vertices[faces[i][j][0]][0]<<std::endl;
 			std::cout<<"Vector y : "<<i<<"= "<<vertices[faces[i][j][0]][1]<<std::endl;
-			std::cout<<"Vector z : "<<i<<"= "<<vertices[faces[i][j][0]][2]<<"\n"<<std::endl;
+			std::cout<<"Vector z : "<<i<<"= "<<vertices[faces[i][j][0]][2]<<"\n"<<std::endl;*/
 			
 			vec3 p(vertices[faces[i][j][0]][0],vertices[faces[i][j][0]][1],vertices[faces[i][j][0]][2]);
 			ps.push_back(p);

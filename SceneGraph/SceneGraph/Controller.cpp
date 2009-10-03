@@ -11,20 +11,23 @@ SceneGraph - Room Editor
 using namespace std;
 
 Controller::Controller(){
-	root = new ObjectNode("Root Node",0,0);
-	root->setRoot();
-	selected = root;
-	
-	
-	/*root->setSelected();
-	root->transforms->setTransX(-5);
-	root->transforms->setTransY(10);
-	root->transforms->setTransZ(10);
-	root->transforms->setScaleX(.5);
-	root->transforms->setScaleY(.5);
-	root->transforms->setScaleZ(.5);
+	root = new ObjectNode("Light",12,4);
+ 	root->setRoot();
+ 	selected = root;
 
-	addNode("Root Node",0,0);*/
+	
+	
+	root->setSelected();
+ 	root->transforms->setTransX(-5);
+ 	root->transforms->setTransY(10);
+ 	root->transforms->setTransZ(10);
+ 	root->transforms->setScaleY(.5);
+ 	root->transforms->setScaleZ(.5);
+ 
+	addNode("Root Node",0,0);
+
+
+
 	
 
 	//root->tex_2d = tex_2d;
@@ -156,7 +159,7 @@ Controller::draw(){
 
 void
 Controller::translate(float x, float y, float z){
-	if(!selected->isRoot()){
+	if(!selected->isRoot() && selected->getShape() != 0){
 		selected->transforms->setTransX(x);
 		selected->transforms->setTransY(y);
 		selected->transforms->setTransZ(z);
@@ -165,7 +168,7 @@ Controller::translate(float x, float y, float z){
 
 void
 Controller::scale(float x, float y, float z){
-	if(!selected->isRoot()){
+	if(!selected->isRoot() && selected->getShape() != 0){
 		if(x!=0)
 			selected->transforms->setScaleX(x);
 		if(y!=0)
@@ -177,7 +180,7 @@ Controller::scale(float x, float y, float z){
 
 void
 Controller::rotate(float x, float y, float z){
-	if(!selected->isRoot()){
+	if(!selected->isRoot() && selected->getShape() != 0){
 		selected->transforms->setAngleX(x);
 		selected->transforms->setAngleY(y);
 		selected->transforms->setAngleZ(z);
@@ -233,7 +236,7 @@ Controller::render(){
 
 void
 Controller::changeNodeType(string name, int t, int s){
-	if(selected != root){
+	if(selected != root && selected->getShape() != 0){
 		selected->changeObjShape(name,t,s);
 		PrintGraph();
 	}
@@ -254,7 +257,7 @@ Controller::s_firstChild(){
 
 void
 Controller::s_parent(){
-	if(selected != root){
+	if(selected != root && selected->getShape() != 0){
 		selected->unSelect();
 		selected = selected->getParent();
 		selected->setSelected();

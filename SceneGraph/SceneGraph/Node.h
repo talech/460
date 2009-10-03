@@ -65,6 +65,15 @@ public:
 	void setAngleX(float num){angleX += num;}
 	void setAngleY(float num){angleY += num;}
 	void setAngleZ(float num){angleZ += num;}
+
+
+	void putScaleX(float num){scaleX = num;}
+	void putScaleY(float num){scaleY = num;}
+	void putScaleZ(float num){scaleZ = num;}
+	void putAngleX(float num){angleX += num;}
+	void putAngleY(float num){angleY += num;}
+	void putAngleZ(float num){angleZ += num;}
+	
 	void setColor(float numR, float numG, float numB){
 		color[0] = numR;
 		color[1] = numG;

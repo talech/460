@@ -325,12 +325,12 @@ ObjectNode::cloneChildren(ObjectNode* newNodeParent){
 		ObjectNode* newNode = new ObjectNode(children[i]->nodeName(),children[i]->getObject(),children[i]->getShape());
 		newNodeParent->addChild(newNode);
 		newNode->transforms->setColor(children[i]->transforms->getR(),children[i]->transforms->getG(),children[i]->transforms->getB());
-		newNode->transforms->setAngleX(children[i]->transforms->getAngleX());
-		newNode->transforms->setAngleY(children[i]->transforms->getAngleY());
-		newNode->transforms->setAngleZ(children[i]->transforms->getAngleZ());
-		newNode->transforms->setScaleX(children[i]->transforms->getScaleX());
-		newNode->transforms->setScaleY(children[i]->transforms->getScaleY());
-		newNode->transforms->setScaleZ(children[i]->transforms->getScaleZ());
+		newNode->transforms->putAngleX(children[i]->transforms->getAngleX());
+		newNode->transforms->putAngleY(children[i]->transforms->getAngleY());
+		newNode->transforms->putAngleZ(children[i]->transforms->getAngleZ());
+		newNode->transforms->putScaleX(children[i]->transforms->getScaleX());
+		newNode->transforms->putScaleY(children[i]->transforms->getScaleY());
+		newNode->transforms->putScaleZ(children[i]->transforms->getScaleZ());
 		newNode->transforms->setTransX(children[i]->transforms->getTransX()+2);
 		newNode->transforms->setTransY(children[i]->transforms->getTransY());
 		newNode->transforms->setTransZ(0);
@@ -416,14 +416,14 @@ void
 ObjectNode::chair_construct(){
 	ObjectNode* seat = new ObjectNode("Cube",6,2);
 	seat->transforms->setTransY(0.9);
-	seat->transforms->setScaleY(0.2);
+	seat->transforms->putScaleY(0.2);
 	children.push_back(seat);
 	seat->setParent(this);
 
 	ObjectNode* backrest = new ObjectNode("Cube",6,2);
 	backrest->transforms->setTransX(-0.4);
 	backrest->transforms->setTransY(1.5);
-	backrest->transforms->setScaleX(0.2);
+	backrest->transforms->putScaleX(0.2);
 	children.push_back(backrest);
 	backrest->setParent(this);
 
@@ -431,9 +431,9 @@ ObjectNode::chair_construct(){
 	leg1->transforms->setTransX(0.4);
 	leg1->transforms->setTransY(0.4);
 	leg1->transforms->setTransZ(0.4);
-	leg1->transforms->setScaleX(0.2);
-	leg1->transforms->setScaleY(0.8);
-	leg1->transforms->setScaleZ(0.2);
+	leg1->transforms->putScaleX(0.2);
+	leg1->transforms->putScaleY(0.8);
+	leg1->transforms->putScaleZ(0.2);
 	children.push_back(leg1);
 	leg1->setParent(this);
 
@@ -441,9 +441,9 @@ ObjectNode::chair_construct(){
 	leg2->transforms->setTransX(-0.4);
 	leg2->transforms->setTransY(0.4);
 	leg2->transforms->setTransZ(0.4);
-	leg2->transforms->setScaleX(0.2);
-	leg2->transforms->setScaleY(0.8);
-	leg2->transforms->setScaleZ(0.2);
+	leg2->transforms->putScaleX(0.2);
+	leg2->transforms->putScaleY(0.8);
+	leg2->transforms->putScaleZ(0.2);
 	children.push_back(leg2);
 	leg2->setParent(this);
 
@@ -451,9 +451,9 @@ ObjectNode::chair_construct(){
 	leg3->transforms->setTransX(-0.4);
 	leg3->transforms->setTransY(0.4);
 	leg3->transforms->setTransZ(-0.4);
-	leg3->transforms->setScaleX(0.2);
-	leg3->transforms->setScaleY(0.8);
-	leg3->transforms->setScaleZ(0.2);
+	leg3->transforms->putScaleX(0.2);
+	leg3->transforms->putScaleY(0.8);
+	leg3->transforms->putScaleZ(0.2);
 	children.push_back(leg3);
 	leg3->setParent(this);
 
@@ -461,9 +461,9 @@ ObjectNode::chair_construct(){
 	leg4->transforms->setTransX(0.4);
 	leg4->transforms->setTransY(0.4);
 	leg4->transforms->setTransZ(-0.4);
-	leg4->transforms->setScaleX(0.2);
-	leg4->transforms->setScaleY(0.8);
-	leg4->transforms->setScaleZ(0.2);
+	leg4->transforms->putScaleX(0.2);
+	leg4->transforms->putScaleY(0.8);
+	leg4->transforms->putScaleZ(0.2);
 	children.push_back(leg4);
 	leg4->setParent(this);
 }
@@ -473,9 +473,9 @@ void
 ObjectNode::desk_construct(){
 	ObjectNode* top = new ObjectNode("Cube",6,2);
 	top->transforms->setTransY(1.4);
-	top->transforms->setScaleX(2.0);
-	top->transforms->setScaleY(0.3);
-	top->transforms->setScaleZ(4.0);
+	top->transforms->putScaleX(2.0);
+	top->transforms->putScaleY(0.3);
+	top->transforms->putScaleZ(4.0);
 	children.push_back(top);
 	top->setParent(this);
 
@@ -483,9 +483,9 @@ ObjectNode::desk_construct(){
 	leg1->transforms->setTransX(0.85);
 	leg1->transforms->setTransY(0.625);
 	leg1->transforms->setTransZ(1.85);
-	leg1->transforms->setScaleX(0.3);
-	leg1->transforms->setScaleY(1.25);
-	leg1->transforms->setScaleZ(0.3);
+	leg1->transforms->putScaleX(0.3);
+	leg1->transforms->putScaleY(1.25);
+	leg1->transforms->putScaleZ(0.3);
 	children.push_back(leg1);
 	leg1->setParent(this);
 
@@ -493,9 +493,9 @@ ObjectNode::desk_construct(){
 	leg2->transforms->setTransX(-0.85);
 	leg2->transforms->setTransY(0.625);
 	leg2->transforms->setTransZ(1.85);
-	leg2->transforms->setScaleX(0.3);
-	leg2->transforms->setScaleY(1.25);
-	leg2->transforms->setScaleZ(0.3);
+	leg2->transforms->putScaleX(0.3);
+	leg2->transforms->putScaleY(1.25);
+	leg2->transforms->putScaleZ(0.3);
 	children.push_back(leg2);
 	leg2->setParent(this);
 
@@ -503,9 +503,9 @@ ObjectNode::desk_construct(){
 	leg3->transforms->setTransX(-0.85);
 	leg3->transforms->setTransY(0.625);
 	leg3->transforms->setTransZ(-1.85);
-	leg3->transforms->setScaleX(0.3);
-	leg3->transforms->setScaleY(1.25);
-	leg3->transforms->setScaleZ(0.3);
+	leg3->transforms->putScaleX(0.3);
+	leg3->transforms->putScaleY(1.25);
+	leg3->transforms->putScaleZ(0.3);
 	children.push_back(leg3);
 	leg3->setParent(this);
 
@@ -513,9 +513,9 @@ ObjectNode::desk_construct(){
 	leg4->transforms->setTransX(0.85);
 	leg4->transforms->setTransY(0.625);
 	leg4->transforms->setTransZ(-1.85);
-	leg4->transforms->setScaleX(0.3);
-	leg4->transforms->setScaleY(1.25);
-	leg4->transforms->setScaleZ(0.3);
+	leg4->transforms->putScaleX(0.3);
+	leg4->transforms->putScaleY(1.25);
+	leg4->transforms->putScaleZ(0.3);
 	children.push_back(leg4);
 	leg4->setParent(this);
 }
@@ -524,7 +524,7 @@ void
 ObjectNode::cab_construct(){
 	ObjectNode* cab = new ObjectNode("Cube",6,2);
 	cab->transforms->setTransY(1.0);
-	cab->transforms->setScaleY(2.0);
+	cab->transforms->putScaleY(2.0);
 	cab->transforms->setColor(.8,.8,.8);
 	children.push_back(cab);
 	cab->setParent(this);
@@ -532,7 +532,7 @@ ObjectNode::cab_construct(){
 	ObjectNode* mid1 = new ObjectNode("Cube",6,2);
 	mid1->transforms->setTransY(1.35);
 	mid1->transforms->setTransZ(0.01);
-	mid1->transforms->setScaleY(0.1);
+	mid1->transforms->putScaleY(0.1);
 	mid1->transforms->setColor(.3,.3,.3);
 	children.push_back(mid1);
 	mid1->setParent(this);
@@ -540,7 +540,7 @@ ObjectNode::cab_construct(){
 	ObjectNode* mid2 = new ObjectNode("Cube",6,2);
 	mid2->transforms->setTransY(0.65);
 	mid2->transforms->setTransZ(0.01);
-	mid2->transforms->setScaleY(0.1);
+	mid2->transforms->putScaleY(0.1);
 	mid2->transforms->setColor(.3,.3,.3);
 	children.push_back(mid2);
 	mid2->setParent(this);
@@ -548,8 +548,8 @@ ObjectNode::cab_construct(){
 	ObjectNode* hand1 = new ObjectNode("Cube",6,2);
 	hand1->transforms->setTransY(1.65);
 	hand1->transforms->setTransZ(0.02);
-	hand1->transforms->setScaleX(0.25);
-	hand1->transforms->setScaleY(0.1);
+	hand1->transforms->putScaleX(0.25);
+	hand1->transforms->putScaleY(0.1);
 	hand1->transforms->setColor(.3,.3,.3);
 	children.push_back(hand1);
 	hand1->setParent(this);
@@ -557,8 +557,8 @@ ObjectNode::cab_construct(){
 	ObjectNode* hand2 = new ObjectNode("Cube",6,2);
 	hand2->transforms->setTransY(1.00);
 	hand2->transforms->setTransZ(0.02);
-	hand2->transforms->setScaleX(0.25);
-	hand2->transforms->setScaleY(0.1);
+	hand2->transforms->putScaleX(0.25);
+	hand2->transforms->putScaleY(0.1);
 	hand2->transforms->setColor(.3,.3,.3);
 	children.push_back(hand2);
 	hand2->setParent(this);
@@ -566,8 +566,8 @@ ObjectNode::cab_construct(){
 	ObjectNode* hand3 = new ObjectNode("Cube",6,2);
 	hand3->transforms->setTransY(0.35);
 	hand3->transforms->setTransZ(0.02);
-	hand3->transforms->setScaleX(0.25);
-	hand3->transforms->setScaleY(0.1);
+	hand3->transforms->putScaleX(0.25);
+	hand3->transforms->putScaleY(0.1);
 	hand3->transforms->setColor(.3,.3,.3);
 	children.push_back(hand3);
 	hand3->setParent(this);

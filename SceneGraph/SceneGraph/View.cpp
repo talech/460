@@ -85,7 +85,6 @@ int View::handle(int e){
 			case FL_Shift_R:
 				break;
 		}
-		std::cout<<Fl::event_text()<<std::endl;
 
 		//decrease 'X'
 		if(!done && strcmp(Fl::event_text(),"x") == 0)
