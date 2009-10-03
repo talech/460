@@ -10,9 +10,7 @@ SceneGraph - Room Editor
 #define OBJECTS_H
 
 #include <iostream>
-#include "cabinet.h"
 #include "lamp.h"
-#include "desk.h"
 #include "shapes.h"
 #include "monitor.h"
 

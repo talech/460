@@ -74,6 +74,13 @@ void
 ObjectNode::addChild(ObjectNode* node){
 	children.push_back(node);
 	node->setParent(this);
+	//If parent is chair then object goes on top
+	if(this->type == Desk){
+		if(node->getObject() == Chair)
+			node->transforms->setTransY(0);
+		else
+			node->transforms->setTransY(2.05);
+	}
 }
 
 void
@@ -180,12 +187,12 @@ ObjectNode::drawMe(int select){
 			else
 				drawLamp(transforms->getR(), transforms->getG(), transforms->getB());
 		}
-		else if(type == Cabinet){ 
+		/*else if(type == Cabinet){ 
 			if(selected && select == 2)
 				drawCabinet(transforms->getR2(), transforms->getG2(), transforms->getB2());
 			else
 				drawCabinet(transforms->getR(), transforms->getG(), transforms->getB());
-		}
+		}*/
 		else if(type == Monitor){ 
 			if(selected && select == 2){
 				glBindTexture(GL_TEXTURE_2D, texture[1]);
@@ -490,4 +497,59 @@ ObjectNode::desk_construct(){
 	leg4->transforms->setScaleZ(0.3);
 	children.push_back(leg4);
 	leg4->setParent(this);
+}
+//Cabinet Constructor
+void
+ObjectNode::cab_construct(){
+	ObjectNode* cab = new ObjectNode("Cube",6,2);
+	cab->transforms->setTransY(1.0);
+	cab->transforms->setScaleY(2.0);
+	cab->transforms->setColor(.8,.8,.8);
+	children.push_back(cab);
+	cab->setParent(this);
+
+	ObjectNode* mid1 = new ObjectNode("Cube",6,2);
+	mid1->transforms->setTransY(1.35);
+	mid1->transforms->setTransZ(0.01);
+	mid1->transforms->setScaleY(0.1);
+	mid1->transforms->setColor(.3,.3,.3);
+	children.push_back(mid1);
+	mid1->setParent(this);
+
+	ObjectNode* mid2 = new ObjectNode("Cube",6,2);
+	mid2->transforms->setTransY(0.65);
+	mid2->transforms->setTransZ(0.01);
+	mid2->transforms->setScaleY(0.1);
+	mid2->transforms->setColor(.3,.3,.3);
+	children.push_back(mid2);
+	mid2->setParent(this);
+
+	ObjectNode* hand1 = new ObjectNode("Cube",6,2);
+	hand1->transforms->setTransY(1.65);
+	hand1->transforms->setTransZ(0.02);
+	hand1->transforms->setScaleX(0.25);
+	hand1->transforms->setScaleY(0.1);
+	hand1->transforms->setColor(.3,.3,.3);
+	children.push_back(hand1);
+	hand1->setParent(this);
+
+	ObjectNode* hand2 = new ObjectNode("Cube",6,2);
+	hand2->transforms->setTransY(1.00);
+	hand2->transforms->setTransZ(0.02);
+	hand2->transforms->setScaleX(0.25);
+	hand2->transforms->setScaleY(0.1);
+	hand2->transforms->setColor(.3,.3,.3);
+	children.push_back(hand2);
+	hand2->setParent(this);
+
+	ObjectNode* hand3 = new ObjectNode("Cube",6,2);
+	hand3->transforms->setTransY(0.35);
+	hand3->transforms->setTransZ(0.02);
+	hand3->transforms->setScaleX(0.25);
+	hand3->transforms->setScaleY(0.1);
+	hand3->transforms->setColor(.3,.3,.3);
+	children.push_back(hand3);
+	hand3->setParent(this);
+
+
 }

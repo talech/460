@@ -57,6 +57,9 @@ Controller::addNode(string n, int t, int s){
 		newNode->chair_construct();
 	else if(t==2)
 		newNode->desk_construct();
+	else if(t==4)
+		newNode->cab_construct();
+	
 
 	PrintGraph();
 }
