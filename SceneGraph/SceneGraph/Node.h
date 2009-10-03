@@ -165,6 +165,7 @@ public:
 
 	//Object Creation
 	void chair_construct();
+	void desk_construct();
 	
 	
 
