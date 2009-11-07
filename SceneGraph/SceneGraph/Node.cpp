@@ -574,3 +574,47 @@ ObjectNode::cab_construct(){
 
 
 }
+
+void
+ObjectNode::matrixObject(){
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	if(type != Light){
+		glTranslated(transforms->getTransX(),transforms->getTransY(),transforms->getTransZ());
+		glRotated(transforms->getAngleX(),1,0,0);
+		glRotated(transforms->getAngleY(),0,1,0);
+		glRotated(transforms->getAngleZ(),0,0,1);
+		glScaled(transforms->getScaleX(),transforms->getScaleY(),transforms->getScaleZ());
+	}
+	else{
+		glPushMatrix();
+			glTranslated(transforms->getTransX(),transforms->getTransY(),transforms->getTransZ());
+			glRotated(transforms->getAngleX(),1,0,0);
+			glRotated(transforms->getAngleY(),0,1,0);
+			glRotated(transforms->getAngleZ(),0,0,1);
+			glScaled(transforms->getScaleX(),transforms->getScaleY(),transforms->getScaleZ());
+			glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
+		glPopMatrix();
+	}
+	if(numChildren() == 0){
+		myMatrix();
+	}
+	else{
+		for(int i=0; i<children.size(); i++){
+			children[i]->matrixObject();
+		}
+		myMatrix();
+	}
+	glPopMatrix();
+}
+
+void
+ObjectNode::myMatrix(){
+	if(type != Light && shape != Object){
+		glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
+		double m[16];
+		this->getMatrix(m,0);
+		myMat = new Matrix(m);
+		myMat->InvertMatrix();
+	}
+}

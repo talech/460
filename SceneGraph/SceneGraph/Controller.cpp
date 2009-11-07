@@ -228,6 +228,8 @@ Controller::addMesh(const std::string &filename){
 
 void 
 Controller::render(Config* c){
+	//all matrix calculations are done before calling ray tracer to improve performance
+	root->matrixObject();
 	Tracer* trace = new Tracer(root, c->file, c);
 	trace->setDimensions(c->resolution[0],c->resolution[1]);
 	trace->InitRender();

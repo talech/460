@@ -6,6 +6,7 @@ Matrix::Matrix(const double m[16]){
 	}
 
 	det = DetMatrix();
+	inverted = false;
 	transposeMatrix();
 }
 
@@ -60,6 +61,7 @@ Matrix::InvertMatrix(){
 		inverse[15] = ((matrix[0]*matrix[5]*matrix[10])+(matrix[4]*matrix[9]*matrix[2])+(matrix[8]*matrix[1]*matrix[6])-(matrix[0]*matrix[9]*matrix[6])-(matrix[4]*matrix[1]*matrix[10])-(matrix[8]*matrix[5]*matrix[2]))/det;
 		
 		transposeInverse();
+		inverted = true;
 		return true;
 	}
 }
