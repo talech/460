@@ -1,6 +1,6 @@
 #include <math.h>
 #include "algebra3.h"
-#include "Matrix.h"
+
 #include "tests.h"
 #include <vector>
 
@@ -24,16 +24,16 @@ vec3 getNormal(vec3 vert1, vec3 vert2, vec3 vert3){
 	return res;
 }
 
-double Test_RaySphereIntersect( const double P0[3], const double V0[3], const double matrix[16],vec3& normOut, vec3& inPoint){
+double Test_RaySphereIntersect( const double P0[3], const double V0[3], Matrix* m,vec3& normOut, vec3& inPoint){
 	// TODO fill this in so it calls your own ray-casting function.
 	// See the documentation of this function in tests.h.
 	vec4 p0(P0[0],P0[1],P0[2],1);
 	vec4 v0(V0[0],V0[1],V0[2],0);
 	vec4 p1;
-	Matrix m(matrix);
+	//Matrix m(matrix);
 	v0 = v0.normalize();
 	float t = -1;
-	if(m.InvertMatrix()){
+	if(m->InvertedMatrix()){
 		/*std::cout<<"DETERMINANT: "<<m.getDet()<<std::endl;
 		for(int i=0; i<16; i++){
 			std::cout<<m.getInverse(i)<<std::endl;
@@ -42,8 +42,8 @@ double Test_RaySphereIntersect( const double P0[3], const double V0[3], const do
 		
 		p1 = p0 + v0;
 		p1[3] = 1;
-		p0 = m.multiplyInverse(p0);
-		p1 = m.multiplyInverse(p1);
+		p0 = m->multiplyInverse(p0);
+		p1 = m->multiplyInverse(p1);
 		//cout<<"\n"<<"VECTOR P0\n";
 		
 		//for(int i=0; i<4; i++){
@@ -156,7 +156,7 @@ double Test_RaySphereIntersect( const double P0[3], const double V0[3], const do
 		return -1;
 }
 
-double Test_RayPolyIntersect( const double P0[3], const double V0[3], const double p1[3], const double p2[3], const double p3[3], const double matrix[16],vec3& normOut,vec3& inPoint ){
+double Test_RayPolyIntersect( const double P0[3], const double V0[3], const double p1[3], const double p2[3], const double p3[3],  Matrix* m,vec3& normOut,vec3& inPoint ){
 	// TODO fill this in so it calls your own ray-casting function.
 	// See the documentation of this function in tests.h.
 
@@ -165,10 +165,10 @@ double Test_RayPolyIntersect( const double P0[3], const double V0[3], const doub
 	vec4 r1;
 	vec3 rayStart;
 	vec3 rayDirection;
-	Matrix m(matrix);
+	//Matrix m(matrix);
 	v0 = v0.normalize();
 	float t = -1;
-	if(m.InvertMatrix()){
+	if(m->InvertedMatrix()){
 		/*std::cout<<"DETERMINANT: "<<m.getDet()<<std::endl;
 		for(int i=0; i<16; i++){
 			std::cout<<m.getInverse(i)<<std::endl;
@@ -176,8 +176,8 @@ double Test_RayPolyIntersect( const double P0[3], const double V0[3], const doub
 		
 		r1 = r0 + v0;
 		r1[3] = 1;
-		r0 = m.multiplyInverse(r0);
-		r1 = m.multiplyInverse(r1);
+		r0 = m->multiplyInverse(r0);
+		r1 = m->multiplyInverse(r1);
 		//std::cout<<"\n"<<"VECTOR r0\n";
 		
 		for(int i=0; i<4; i++){
@@ -254,7 +254,7 @@ double Test_RayPolyIntersect( const double P0[3], const double V0[3], const doub
 	return t;
 }
 
-double Test_RayCubeIntersect( const double P0[3], const double V0[3], const double matrix[16], 
+double Test_RayCubeIntersect( const double P0[3], const double V0[3],  Matrix* m, 
 							 vec3& normOut, vec3& inPoint )
 {
 	// TODO fill this in so it calls your own ray-casting function.
@@ -265,13 +265,13 @@ double Test_RayCubeIntersect( const double P0[3], const double V0[3], const doub
 	vec4 p1;
 	vec3 rayStart;
 	vec3 rayDirection;
-	Matrix m(matrix);
+	//Matrix m(matrix);
 	v0 = v0.normalize();
 	float ts[6];
 	vec3 normals[6];
 	float t = -1;
 	bool tPos = false;
-	if(m.InvertMatrix()){
+	if(m->InvertedMatrix()){
 		/*std::cout<<"DETERMINANT: "<<m.getDet()<<std::endl;
 		for(int i=0; i<16; i++){
 			std::cout<<m.getInverse(i)<<" ";
@@ -302,8 +302,8 @@ double Test_RayCubeIntersect( const double P0[3], const double V0[3], const doub
 		}
 		std::cout<<"\n";*/
 
-		p0 = m.multiplyInverse(p0);
-		p1 = m.multiplyInverse(p1);
+		p0 = m->multiplyInverse(p0);
+		p1 = m->multiplyInverse(p1);
 		/*std::cout<<"\n"<<"POINT P0\n";
 		
 		for(int i=0; i<4; i++){
@@ -449,18 +449,18 @@ double Test_RayCubeIntersect( const double P0[3], const double V0[3], const doub
 double Test_RayPlaneIntersect(
 	const double P0[3], const double V0[3], 
 	const double p1[3], const double p2[3], const double p3[3],const double p4[3],
-	const double matrix[16],vec3& normOut, vec3& inPoint){
+	 Matrix* m,vec3& normOut, vec3& inPoint){
 
 	vec4 r0(P0[0],P0[1],P0[2],1);
 	vec4 v0(V0[0],V0[1],V0[2],0);
 	vec4 r1;
 	vec3 rayStart;
 	vec3 rayDirection;
-	Matrix m(matrix);
+	//Matrix m(matrix);
 	v0 = v0.normalize();
 	vec3 normal;
 	float t = -1;
-	if(m.InvertMatrix()){
+	if(m->InvertedMatrix()){
 		/*std::cout<<"DETERMINANT: "<<m.getDet()<<std::endl;
 		for(int i=0; i<16; i++){
 			std::cout<<m.getInverse(i)<<" ";
@@ -491,8 +491,8 @@ double Test_RayPlaneIntersect(
 		}
 		std::cout<<"\n";*/
 
-		r0 = m.multiplyInverse(r0);
-		r1 = m.multiplyInverse(r1);
+		r0 = m->multiplyInverse(r0);
+		r1 = m->multiplyInverse(r1);
 		/*std::cout<<"\n"<<"POINT P0\n";
 		
 		for(int i=0; i<4; i++){

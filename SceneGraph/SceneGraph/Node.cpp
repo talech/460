@@ -610,11 +610,10 @@ ObjectNode::matrixObject(){
 
 void
 ObjectNode::myMatrix(){
-	if(type != Light && shape != Object){
-		glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
-		double m[16];
-		this->getMatrix(m,0);
-		myMat = new Matrix(m);
-		myMat->InvertMatrix();
-	}
+	glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
+	double m[16];
+	this->getMatrix(m,0);
+	myMat = new Matrix(m);
+	myMat->InvertMatrix();
+
 }

@@ -1,6 +1,6 @@
 #ifndef TESTS_H
 #define TESTS_H
-
+#include "Matrix.h"
 
 void RunTests();
 
@@ -16,7 +16,7 @@ void RunTests();
 // intersection.
 double Test_RaySphereIntersect(
 	const double P0[3], const double V0[3], 
-	const double matrix[16],vec3& normOut, vec3& inPoint);
+	Matrix* m,vec3& normOut, vec3& inPoint);
 
 // Tries to find the intersection of a ray and a triangle.
 // This is just like the above function, but it intersects the ray with a
@@ -25,17 +25,17 @@ double Test_RaySphereIntersect(
 double Test_RayPolyIntersect(
 	const double P0[3], const double V0[3], 
 	const double p1[3], const double p2[3], const double p3[3], 
-	const double matrix[16], vec3& normOut,vec3& inPoint);
+	Matrix* m, vec3& normOut,vec3& inPoint);
 
 // This is just like Test_RaySphereIntersect, but with a unit cube instead of a 
 // sphere. A unit cube extends from -0.5 to 0.5 in all axes.
 double Test_RayCubeIntersect(
 	const double P0[3], const double V0[3], 
-	const double matrix[16], vec3& normOut, vec3& inPoint);
+	Matrix* m, vec3& normOut, vec3& inPoint);
 
 double Test_RayPlaneIntersect(
 	const double P0[3], const double V0[3], 
 	const double p1[3], const double p2[3], const double p3[3],const double p4[3], 
-	const double matrix[16],vec3& normOut, vec3& inPoint);
+	Matrix* m,vec3& normOut, vec3& inPoint);
 
 #endif

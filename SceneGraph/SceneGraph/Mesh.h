@@ -45,7 +45,7 @@ public:
 
 	void findBoundingBox(vec3& max, vec3& min);
 	float Test_RayMeshIntersect(const double P0[3], const double V0[3],
-		const double matrix[16],vec3& normOut, vec3& inPoint);
+		Matrix* m,vec3& normOut, vec3& inPoint);
 
 };
 

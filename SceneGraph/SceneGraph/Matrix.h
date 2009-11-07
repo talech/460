@@ -18,7 +18,7 @@ public:
 	Matrix(const double m[16]);
 	bool removeTrans();
 	bool InvertMatrix();
-	bool InvertedMatrix(){ return inverted};
+	bool InvertedMatrix(){ return inverted;}
 	double getDet(){return det;}
 	double getInverse(int i){return inverse[i];}
 	vec4 multiply(vec4 vector);

@@ -109,7 +109,7 @@ Mesh::findBoundingBox(vec3& max, vec3& min){
 
 float
 Mesh::Test_RayMeshIntersect(const double P0[], const double V0[], 
-			const double matrix[], vec3 &normOut, vec3 &inPoint){
+			Matrix* m, vec3 &normOut, vec3 &inPoint){
 
 	float t = -1;
 	int smallIndex = faces[0][0][1];
@@ -146,7 +146,7 @@ Mesh::Test_RayMeshIntersect(const double P0[], const double V0[],
 			cout<<"PS 1 : x = "<<p2[0]<<" y = "<<p2[1]<<" z = "<<p2[2]<<endl;
 			cout<<"PS 2 : x = "<<p3[0]<<" y = "<<p3[1]<<" z = "<<p3[2]<<endl;*/
 			
-			ti = Test_RayPolyIntersect(P0,V0,p1,p2,p3,matrix,norm,point);
+			ti = Test_RayPolyIntersect(P0,V0,p1,p2,p3,m,norm,point);
 			
 			
 			//cout<<"ti: "<<ti<<endl;
@@ -161,7 +161,7 @@ Mesh::Test_RayMeshIntersect(const double P0[], const double V0[],
 			cout<<"PS 1 : x = "<<p2[0]<<" y = "<<p2[1]<<" z = "<<p2[2]<<endl;
 			cout<<"PS 2 : x = "<<p3[0]<<" y = "<<p3[1]<<" z = "<<p3[2]<<endl;
 			cout<<"PS 3 : x = "<<p4[0]<<" y = "<<p4[1]<<" z = "<<p4[2]<<endl;*/
-			ti = Test_RayPlaneIntersect(P0,V0,p1,p2,p3,p4,matrix,norm,point);
+			ti = Test_RayPlaneIntersect(P0,V0,p1,p2,p3,p4,m,norm,point);
 			//cout<<"ti: "<<ti<<endl;
 		}
 		else if(faces[i].size() > 4){
@@ -173,7 +173,7 @@ Mesh::Test_RayMeshIntersect(const double P0[], const double V0[],
 						/*cout<<"\nPS 0 : x = "<<p1[0]<<" y = "<<p1[1]<<" z = "<<p1[2]<<endl;
 						cout<<"PS 1 : x = "<<p2[0]<<" y = "<<p2[1]<<" z = "<<p2[2]<<endl;
 						cout<<"PS 2 : x = "<<p3[0]<<" y = "<<p3[1]<<" z = "<<p3[2]<<endl;*/
-					ti = Test_RayPolyIntersect(P0,V0,p1,p2,p3,matrix,norm,point);	
+					ti = Test_RayPolyIntersect(P0,V0,p1,p2,p3,m,norm,point);	
 				}
 				
 		}

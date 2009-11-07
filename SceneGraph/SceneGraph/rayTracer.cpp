@@ -26,9 +26,11 @@ Tracer::InitRender(){
 void
 Tracer::Render(){
 	
-	double mat[16];
+	//double mat[16];
 
-	root->getMatrix(mat,0);
+	//root->getMatrix(mat,0);
+	Matrix* mat;
+	mat = root->getMyMatrix();
 	
 	/*myfile<<"MAT\n";	
 	for(int i=0; i<16; i++){
@@ -194,14 +196,17 @@ Tracer::RayTraceShadow(vec3 &origin, vec3 &dir,ObjectNode* obj){
 
 void
 Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t_depth){
-	double mat[16];
+	//double mat[16];
+	Matrix* mat;
 	double o[3] = {origin[0],origin[1],origin[2]};
 	double d[3] = {dir[0],dir[1],dir[2]};
 	double t = -1;
 	vec3 normal(0,0,0);
 	vec3 point(0,0,0);
 
-	obj->getMatrix(mat,0);
+	//obj->getMatrix(mat,0);
+	mat = obj->getMyMatrix();
+
 	
 	/*std::cout<<"MAT\n";	
 	for(int i=0; i<16; i++){
@@ -305,14 +310,16 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 
 bool
 Tracer::IntersectTestShadow(vec3 &origin, vec3 &dir,ObjectNode* obj){
-	double mat[16];
+	//double mat[16];
 	double o[3] = {origin[0],origin[1],origin[2]};
 	double d[3] = {dir[0],dir[1],dir[2]};
 	double t = -1;
 	vec3 normal(0,0,0);
 	vec3 point(0,0,0);
 
-	obj->getMatrix(mat,0);
+	//obj->getMatrix(mat,0);
+	Matrix* mat;
+	mat = obj->getMyMatrix();
 	
 	if(obj->getShape() == 2){
 		if(obj->getObject() == 5){
@@ -406,18 +413,22 @@ Tracer::IntersectTestShadow(vec3 &origin, vec3 &dir,ObjectNode* obj){
 
 void
 Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* obj,int t_depth){
-	double mLight[16];
-	root->getMatrix(mLight,0);
-	Matrix mL(mLight);
+	//double mLight[16];
+	Matrix* mL;
+	//root->getMatrix(mLight,0);
+	mL = root->getMyMatrix();
+	//Matrix mL(mLight);
 	vec4 L0(0,0,0,1);
-	L0 = mL.multiply(L0);
+	L0 = mL->multiply(L0);
 	vec3 L0_3(L0[0],L0[1],L0[2]);
-	double mat[16];
-	obj->getMatrix(mat,0);
-	Matrix m(mat);
+	//double mat[16];
+	//obj->getMatrix(mat,0);
+	//Matrix m(mat);
+	Matrix* m;
+	m = obj->getMyMatrix();
 	float shade = 1;
-	if(m.InvertMatrix()){
-		L0 = m.multiplyInverse(L0);
+	if(m->InvertedMatrix()){
+		L0 = m->multiplyInverse(L0);
 		vec3 L(L0[0],L0[1],L0[2]);
 		L = L - point;
 		L.normalize();
@@ -436,7 +447,7 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 
 		//calculations to determine shades
 		vec4 pi(point[0],point[1],point[2],1);
-		pi = m.multiply(pi);
+		pi = m->multiply(pi);
 		vec3 p0(pi[0],pi[1],pi[2]);
 		vec3 light = L0_3 - p0;
 		float tdist = light.length();
@@ -453,8 +464,8 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 		vec4 v0(dir[0],dir[1],dir[2],0);
 		vec4 r1;
 		r1 = r0 + v0;
-		r0 = m.multiplyInverse(r0);
-		r1 = m.multiplyInverse(r1);
+		r0 = m->multiplyInverse(r0);
+		r1 = m->multiplyInverse(r1);
 		//recalculate v0
 		v0 = r1 - r0;
 
@@ -487,10 +498,10 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 		if (refl > 0){
 			vec4 N(normal[0],normal[1],normal[2],0);
 			vec4 P(point[0],point[1],point[2],1);
-			P = m.multiply(P);
+			P = m->multiply(P);
 			vec3 w_P(P[0],P[1],P[2]);
-			if(m.removeTrans()){
-				N = m.multiplyInverseTranspose(N);
+			if(m->removeTrans()){
+				N = m->multiplyInverseTranspose(N);
 				vec3 w_N(N[0],N[1],N[2]);
 				dir.normalize();
 				w_N.normalize();
