@@ -24,7 +24,7 @@ SceneGraph - Room Editor
 #include "Controller.h"
 #include "inputButton.h"
 #include "algebra3.h"
-#include "config.h"
+
 
 
 

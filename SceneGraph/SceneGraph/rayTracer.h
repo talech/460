@@ -6,6 +6,7 @@
 #include "Node.h"
 #include "Matrix.h"
 #include "bmp_io.h"
+#include "config.h"
 #include <stdio.h>
 #include <vector>
 #include <iostream>
@@ -23,6 +24,8 @@ using namespace std;
 class Tracer{
 private:
 	ofstream myfile;
+	char *file_out_name;
+	Config* config;
 	ObjectNode* root;
 	float WX1, WX2, WY1, WY2, DX, DY, SX, SY;
 	int width, height;
@@ -35,7 +38,7 @@ private:
 
 
 public:
-	Tracer(ObjectNode* r);
+	Tracer(ObjectNode* r, char* fileName, Config* c);
 	void setDimensions(int w, int h);
 	void InitRender();
 	void Render();

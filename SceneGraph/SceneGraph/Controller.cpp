@@ -18,9 +18,9 @@ Controller::Controller(){
 	
 	
 	root->setSelected();
- 	root->transforms->setTransX(-5);
- 	root->transforms->setTransY(10);
- 	root->transforms->setTransZ(10);
+ 	root->transforms->setTransX(10);
+ 	root->transforms->setTransY(12);
+ 	root->transforms->setTransZ(12.5);
  	root->transforms->setScaleY(.5);
  	root->transforms->setScaleZ(.5);
  
@@ -227,9 +227,9 @@ Controller::addMesh(const std::string &filename){
 }
 
 void 
-Controller::render(){
-	Tracer* trace = new Tracer(root);
-	trace->setDimensions(500,500);
+Controller::render(Config* c){
+	Tracer* trace = new Tracer(root, c->file, c);
+	trace->setDimensions(c->resolution[0],c->resolution[1]);
 	trace->InitRender();
 	trace->Render();
 }

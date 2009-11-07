@@ -25,13 +25,13 @@ camera::camera(){
 	center[2] = 0;
 		
 	//eye on horizontal surface of sphere
-	eye[0] = 0.0;
-	eye[1] = 5.0;
-	eye[2] = 15.0;
+	eye[0] = 10.0;
+	eye[1] = 10.0;
+	eye[2] = 8.0;
 
-	eyeOrig[0] = 0.0;
-	eyeOrig[1] = 5.0;
-	eyeOrig[2] = 15.0;
+	eyeOrig[0] = 10.0;
+	eyeOrig[1] = 10.0;
+	eyeOrig[2] = 8.0;
 
 	up = yAxis;
 	upOrig = yAxis;

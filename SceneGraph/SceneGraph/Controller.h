@@ -19,6 +19,7 @@ SceneGraph - Room Editor
 #include "Surfrev.h"
 #include "algebra3.h"
 #include "parser.h"
+#include "config.h"
 #include "rayTracer.h"
 
 class Controller{
@@ -50,7 +51,7 @@ public:
 	bool addMesh(const std::string& filename);
 	void loadTexture(char* Filename, int num){ root->LoadGLTextures(Filename, num);}
 	
-	void render();
+	void render(Config* c);
 
 	void setDiffuse(float d){ selected->transforms->setDiffuse(d);}
 	void setSpecular(float s){ selected->transforms->setSpecular(s);}

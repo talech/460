@@ -78,6 +78,9 @@ public:
 	}
 
 	void passEvent(int e);
+	
+	void changeView(Config* c);
+	void resetView();
 
 };
 

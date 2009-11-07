@@ -10,10 +10,15 @@
 
 using namespace std;
 
+//global variables for raytracer status
+//int RTSIZE = 0;
+//int RTSTEP = 0;
+//bool RTDONE = false;
+
 class Config{
 public:
 	Config(){}
-	string file;
+	char* file;
 	vec2 resolution;
 	vec3 eyePos;
 	vec3 vDir;
@@ -58,7 +63,10 @@ static Config* Open_Config(const std::string& filename){
 						cout << "Corrupted file\n";
 						return tracerConfig;
 					}
-					tracerConfig->file = name;
+					char* cName = new char[name.size() + 1];
+					copy(name.begin(), name.end(), cName);
+					cName[name.size()] = '\0';
+					tracerConfig->file = cName;
 				}
 				else if(keyword == "RESO"){
 					//RESO should be followed by x and y coords

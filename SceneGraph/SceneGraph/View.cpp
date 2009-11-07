@@ -267,3 +267,25 @@ void View::resize(int x,int y,int w,int h){
 void View::passEvent(int e){
 	handle(e);
 }
+void View::changeView(Config *c){
+	glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+	gluPerspective(c->fovy, (float)c->resolution[0]/(float)c->resolution[1], .05, 30.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(c->eyePos[0],c->eyePos[1],c->eyePos[2],
+		c->vDir[0],c->vDir[1],c->vDir[2],
+		c->uVec[0],c->uVec[1],c->uVec[2]);
+}
+void View::resetView(){
+	glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(40, 1, .05, 30.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(myCamera.eye[0],myCamera.eye[1],myCamera.eye[2], 
+			myCamera.center[0],	myCamera.center[1],myCamera.center[2], 
+			myCamera.up[0],myCamera.up[1],myCamera.up[2]);
+}

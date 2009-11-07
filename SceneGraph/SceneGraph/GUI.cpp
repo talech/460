@@ -255,12 +255,18 @@ GUI::choose_renderCB2(){
 
 	if ( chooser.value() != NULL ){
 		filename = chooser.value();
-		Open_Config(filename);
-		bool load = true;
+		Config* c = Open_Config(filename);
+		bool load = c->complete;
 		if(!load){
 			char msg[] = "Sorry. Invalid file.";
 			fl_alert(msg);
 		}
+		else{
+			view->changeView(c);
+			control->render(c);
+			view->resetView();
+		}
+
 	}
 	view->redraw();
 
@@ -268,7 +274,7 @@ GUI::choose_renderCB2(){
 
 void 
 GUI::renderCB2(){
-	control->render();
+	//control->render();
 }
 
 GUI::GUI(){

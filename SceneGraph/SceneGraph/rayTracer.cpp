@@ -1,19 +1,24 @@
 #include "rayTracer.h"
 
-Tracer::Tracer(ObjectNode *r){
+
+Tracer::Tracer(ObjectNode *r, char* fileName, Config* c){
 	root = r;
+	file_out_name = fileName;
+	config = c;
 }
 
 void 
 Tracer::setDimensions(int w, int h){
 	width = w;
 	height = h;
+	//RTSIZE = w*h;
 }
 
 void 
 Tracer::InitRender(){
 	// screen plane in world space coordinates
-	WX1 = -0.5, WX2 = 0.5, WY1 = 0.5, WY2 = SY = -0.5;
+	WX1 = -0.5, WX2 = 0.5;
+	WY1 = ((float)height/(float)width)*0.5, WY2 = SY = ((float)height/(float)width)*(-0.5);
 	DX = (WX2 - WX1)/width;
 	DY = -(WY2 - WY1)/height; //we start with Y negative to write bmp 
 }
@@ -21,9 +26,7 @@ Tracer::InitRender(){
 void
 Tracer::Render(){
 	
-	/*myfile.open ("example#3.txt");*/
 	double mat[16];
-
 
 	root->getMatrix(mat,0);
 	
@@ -32,8 +35,9 @@ Tracer::Render(){
 		myfile<<mat[i]<<" ";}
 	myfile << "\nStart.\n";
 	*/
-	char *file_out_name = "test#10.bmp";
+	//file_out_name = "test#10.bmp";
 	vec3 origin(0,0,0);
+	//vec3 origin = config->eyePos;
 	for(int i=0; i<TRACEDEPTH; i++)
 		smallestT[i] = -1;
 	
@@ -114,11 +118,13 @@ Tracer::Render(){
 			indexg = indexg + 1;
 			indexb = indexb + 1;
 			/*std::cout<<"\n";*/
+			//RTSTEP++;
 		}
 		//myfile<<"\n---------------\n";
 		SY+=DY;
 	}
 	std::cout<<"DONE\n";
+	//RTDONE = true;
 	//myfile << "End.\n";
 	//myfile.close();
 

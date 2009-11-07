@@ -20,6 +20,7 @@ SceneGraph - Room Editor
 
 #include "objects.h"
 #include "Mesh.h"
+#include "Matrix.h"
 
 
 
@@ -133,8 +134,9 @@ protected:
 	double mat[5][16];
 
 	
-	
-	
+	//matrix stuff redone
+	void myMatrix();
+	Matrix* myMat;
 	
 
 public:
@@ -180,6 +182,10 @@ public:
 	void chair_construct();
 	void desk_construct();
 	void cab_construct();
+	
+	//Matrix stuff redone
+	void matrixObject();
+	Matrix* getMyMatrix(){return myMat;}
 	
 
 
