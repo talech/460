@@ -137,6 +137,9 @@ protected:
 	//matrix stuff redone
 	void myMatrix();
 	Matrix* myMat;
+
+	GLuint teapotList;
+
 	
 
 public:

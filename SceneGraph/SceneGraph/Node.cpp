@@ -52,7 +52,12 @@ ObjectNode::ObjectNode(string n, int t, int s):Node(){
 	else if(type == Monitor)transforms->setColor(0.2,0.2,0.2);
 	else if(type == RootNode)transforms->setColor(0.4, 0.4, 1.0);
 	else if(type == MeshO) transforms->setColor(0.0,1.0,0.0);
-	else if(type == Object) transforms->setColor(0.9,0.9,0.9);
+	else if(type == Object)transforms->setColor(0.9,0.9,0.9);
+	
+	teapotList = glGenLists(1);
+	glNewList (teapotList, GL_COMPILE);
+	glutSolidTeapot (0.5);
+	glEndList ();
 	cout<<"Node '"<<name<<"' Created\n";
 }
 
@@ -184,25 +189,31 @@ ObjectNode::drawObject(int select){
 
 void
 ObjectNode::drawMe(int select){
-	if( shape != Object){
+	if( true /*shape != Object*/){
 		glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
+
 		
 		/*std::cout<<"MAT NODE:\n"; 
 		for(int i=0; i<16; i++){
 			std::cout<<mat[i]<<" ";
 		}
 		std::cout<<"\n";*/
+		GLfloat red[] = {1.0,0.0,0.0, 1.0};
 		GLfloat color[] = {transforms->getR(), transforms->getG(), transforms->getB(), 1.0};
 		GLfloat color2[] = {transforms->getR2(), transforms->getG2(), transforms->getB2(), 1.0};
 		
+		if (type == Object){
+			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, red);
+			glCallList(teapotList);
+		}
 		/*if(type == Desk){
 			if(selected && select == 2)
 				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color2);
 			else
 				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color);
 			drawDesk();
-		}
-		else */if(type == Lamp){ 
+		}*/
+		else if(type == Lamp){ 
 			if(selected && select == 2)
 				drawLamp(transforms->getR2(), transforms->getG2(), transforms->getB2());
 			else
