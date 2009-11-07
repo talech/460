@@ -16,6 +16,8 @@ private:
 	bool inverted;
 public:
 	Matrix(const double m[16]);
+	Matrix(double d, const double m[16], const double in[16],
+		const double t[16], const double iT[16]);
 	bool removeTrans();
 	bool InvertMatrix();
 	bool InvertedMatrix(){ return inverted;}
@@ -27,6 +29,7 @@ public:
 	vec4 multiplyInverseTranspose(vec4 vector);
 	void transposeMatrix();
 	void transposeInverse();
+	Matrix* copyMatrix();
 
 
 

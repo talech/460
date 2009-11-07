@@ -21,9 +21,9 @@ Controller::Controller(){
  	root->transforms->setTransX(10);
  	root->transforms->setTransY(12);
  	root->transforms->setTransZ(12.5);
-	root->transforms->putScaleX(2);
-	root->transforms->putScaleY(2);
- 	root->transforms->putScaleZ(2);
+	root->transforms->putScaleX(.5);
+	root->transforms->putScaleY(.5);
+ 	root->transforms->putScaleZ(.5);
 	root->transforms->setColor(1,1,1);
  
 	addNode("Root Node",0,0);

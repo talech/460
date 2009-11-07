@@ -109,9 +109,6 @@ Tracer::Render(){
 				  myfile<<"Y: "<<y<<"";
 				  myfile<<" SX: "<<SX<<"  ";
 				  myfile<<"SY: "<<SY<<"\n";}*/
-			if(color[0]>1) color[0] = 1;
-			if(color[1]>1) color[1] = 1;
-			if(color[2]>1) color[2] = 1;
 			*indexr = 255*color[0];
 			*indexg = 255*color[1];
 			*indexb = 255*color[2];
@@ -228,7 +225,7 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 	}
 	else{
 		//Root = floor
-		/*if(obj->getObject() == 0){
+		if(obj->getObject() == 0){
 			double p1[3] = {5,0,5};
 			double p2[3] = {5,0,-5};
 			double p3[3] = {-5,0,-5};
@@ -236,7 +233,7 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 			double t1 = Test_RayPlaneIntersect(o,d,p1,p2,p3,p4,mat,normal,point);
 			
 			t = t1;
-		}*/
+		}
 		//Meshes
 		//Find bounding box, given by the max and min x, y and z
 		//test for each of the planes until find one that intersects
@@ -290,7 +287,7 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 		if(t <= smallestT[t_depth]){
 			smallestT[t_depth] = t;
 			if(obj->getObject() == 5||obj->getObject() == 6
-				/*||obj->getObject() == 0*/||obj->getObject() == 10){
+				||obj->getObject() == 0 ||obj->getObject() == 10){
 				getColor(dir,color,normal,point,obj,t_depth);
 					
 			}
@@ -334,18 +331,18 @@ Tracer::IntersectTestShadow(vec3 &origin, vec3 &dir,ObjectNode* obj){
 		}
 	}
 	else{
-		//if(obj->getObject() == 0){
-		//	double p1[3] = {5,0,5};
-		//	double p2[3] = {5,0,-5};
-		//	double p3[3] = {-5,0,-5};
-		//	double p4[3] = {-5,0,5};
-		//	double t1 = Test_RayPlaneIntersect(o,d,p1,p2,p3,p4,mat,normal,point);
-		//	t = t1;
-		//	/*if(t1>=0){
-		//		color[0] = .35;
-		//		color[1] = .18;
-		//		color[2] = .07;
-		//	}
+		if(obj->getObject() == 0){
+			double p1[3] = {5,0,5};
+			double p2[3] = {5,0,-5};
+			double p3[3] = {-5,0,-5};
+			double p4[3] = {-5,0,5};
+			double t1 = Test_RayPlaneIntersect(o,d,p1,p2,p3,p4,mat,normal,point);
+			t = t1;
+			/*if(t1>=0){
+				color[0] = .35;
+				color[1] = .18;
+				color[2] = .07;
+			}
 
 		//	double p5[3] = {5,5,5};
 		//	double p6[3] = {5,5,-5};
@@ -365,8 +362,8 @@ Tracer::IntersectTestShadow(vec3 &origin, vec3 &dir,ObjectNode* obj){
 		//		color[1] = obj->transforms->getG();
 		//		color[2] = obj->transforms->getB();
 		//	}*/
-		//}
-		/*else*/ if(obj->getObject() == 10){
+		}
+		else if(obj->getObject() == 10){
 			vec3 min, max;
 			obj->myMesh->findBoundingBox(max,min);
 			double p1[3] = {max[0],min[1],max[2]};	double p2[3] = {max[0],max[1],max[2]};
@@ -436,7 +433,8 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 		vec3 L(L0[0],L0[1],L0[2]);
 		L = L - point;
 		L.normalize();
-		
+
+		float refl = obj->transforms->getReflection();
 		//calculations to determine shades
 		vec4 pi(point[0],point[1],point[2],1);
 		pi = m->multiply(pi);
@@ -450,7 +448,7 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 		
 		vec3 lit_color(0,0,0);
 		float diffuse = normal*L; //N dot L
-		if(shade>0 && diffuse>0){ //not occluded
+		if(shade>0){ //not occluded
 			lit_color[0] += diffuse*obj->transforms->getR()*root->transforms->getR();
 			lit_color[1] += diffuse*obj->transforms->getG()*root->transforms->getG();
 			lit_color[2] += diffuse*obj->transforms->getB()*root->transforms->getB();
@@ -466,14 +464,17 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 			v0 = r1 - r0;
 
 			vec3 w_Dir(v0[0],v0[1],v0[2]);
-			vec3 lR = L - (2.0 * (normal*L) * normal);
+			float temp = normal*L;
+			temp = 2*temp;
+			vec3 lR = temp*normal;
+			lR = lR-L;
 			float dot = w_Dir*lR;
 			if(dot<0) dot = 0;
-			float spec = powf(dot,.25);
+			float spec = powf(dot,4);
 
-			/*lit_color[0] += spec*root->transforms->getR();
-			lit_color[1] += spec*root->transforms->getG();
-			lit_color[2] += spec*root->transforms->getB();*/
+			lit_color[0] += refl*spec*root->transforms->getR();
+			lit_color[1] += refl*spec*root->transforms->getG();
+			lit_color[2] += refl*spec*root->transforms->getB();
 		}
 		lit_color[0] += .2*obj->transforms->getR();
 		lit_color[1] += .2*obj->transforms->getG();
@@ -529,14 +530,15 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 		
 		//////////////*****************////////////////////
 		// calculate reflection
-		float refl = obj->transforms->getReflection();
+		
 		if (refl > 0){
+			Matrix* mR = m->copyMatrix();
 			vec4 N(normal[0],normal[1],normal[2],0);
 			vec4 P(point[0],point[1],point[2],1);
-			P = m->multiply(P);
+			P = mR->multiply(P);
 			vec3 w_P(P[0],P[1],P[2]);
-			if(m->removeTrans()){
-				N = m->multiplyInverseTranspose(N);
+			if(mR->removeTrans()){
+				N = mR->multiplyInverseTranspose(N);
 				vec3 w_N(N[0],N[1],N[2]);
 				dir.normalize();
 				w_N.normalize();
@@ -559,9 +561,9 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 					
 					
 					RayTrace(orig,R,rcol,root,t_depth+1);					
-					color[0] += refl * rcol[0] * obj->transforms->getR();
-					color[1] += refl * rcol[1] * obj->transforms->getG();
-					color[2] += refl * rcol[2] * obj->transforms->getB();
+					color[0] += refl * rcol[0];// * obj->transforms->getR();
+					color[1] += refl * rcol[1];//* * obj->transforms->getG();
+					color[2] += refl * rcol[2];//* * obj->transforms->getB();
 					//cout<<"RColor: r = "<<rcol[0]<<" g = "<<rcol[1]<<" b = "<<rcol[2]<<endl;
 					//cout<<"Color: r = "<<color[0]<<" g = "<<color[1]<<" b = "<<color[2]<<endl;
 					

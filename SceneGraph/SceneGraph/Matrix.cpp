@@ -10,6 +10,20 @@ Matrix::Matrix(const double m[16]){
 	transposeMatrix();
 }
 
+Matrix::Matrix(double d, const double m[16], const double in[16],
+		const double t[16], const double iT[16]){
+	for(int i=0; i<16; i++){
+		matrix[i] = m[i];
+		inverse[i] = in[i];
+		transpose[i] = t[i];
+		inverseTranspose[i] = iT[i];
+	}
+
+	det = d;
+	inverted = true;
+	
+}
+
 double
 Matrix::DetMatrix(){
 	float determinant = (matrix[0] * matrix[5] * matrix[10] * matrix[15]) + 
@@ -145,4 +159,23 @@ Matrix::transposeInverse(){
 	inverseTranspose[10] = inverse[10];	inverseTranspose[14] = inverse[11];
 	inverseTranspose[11] = inverse[14];	inverseTranspose[15] = inverse[15];
 
+}
+
+Matrix*
+Matrix::copyMatrix(){
+	double m[16];
+	double in[16];
+	double t[16];
+	double iT[16];
+	double d;
+	for(int i=0; i<16; i++){
+		m[i] = matrix[i];
+		in[i] = inverse[i];
+		t[i] = transpose[i];
+		iT[i] = inverseTranspose[i];
+	
+	}
+	d= det;
+	Matrix* newM = new Matrix(d,m,in,t,iT);
+	return newM;
 }

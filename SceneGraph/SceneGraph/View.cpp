@@ -11,7 +11,7 @@
 void View::init3D(){
 	float l0_dif[] = {1.0f, 1.0f, 1.0f, 1.0f};
 	float l0_amb[] = {0.2f, 0.2f, 0.2f, 0.2f};
-	float l0_pos[] = {-5.0f, 10.0f, 10.0f, 0.0f};
+	float l0_pos[] = {10.0f, 12.0f, 12.5f, 0.0f};
 	
 	glViewport(0, 0, w(), h());
     glMatrixMode(GL_PROJECTION);
