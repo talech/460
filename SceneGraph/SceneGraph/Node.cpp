@@ -162,6 +162,11 @@ ObjectNode::drawObject(int select){
 			glRotated(transforms->getAngleZ(),0,0,1);
 			glScaled(transforms->getScaleX(),transforms->getScaleY(),transforms->getScaleZ());
 			glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
+			//Drawing light to debug
+			/*GLfloat white[] = {1,1,1, 1.0};
+			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+			int list = makeUnitSphere();
+			drawShape(list);*/
 		glPopMatrix();
 	}
 	if(numChildren() == 0){
@@ -179,7 +184,7 @@ ObjectNode::drawObject(int select){
 
 void
 ObjectNode::drawMe(int select){
-	if(type != Light && shape != Object){
+	if( shape != Object){
 		glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
 		
 		/*std::cout<<"MAT NODE:\n"; 
@@ -594,6 +599,10 @@ ObjectNode::matrixObject(){
 			glRotated(transforms->getAngleZ(),0,0,1);
 			glScaled(transforms->getScaleX(),transforms->getScaleY(),transforms->getScaleZ());
 			glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
+			double m[16];
+			this->getMatrix(m,0);
+			myMat = new Matrix(m);
+			myMat->InvertMatrix();
 		glPopMatrix();
 	}
 	if(numChildren() == 0){
@@ -610,10 +619,12 @@ ObjectNode::matrixObject(){
 
 void
 ObjectNode::myMatrix(){
-	glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
-	double m[16];
-	this->getMatrix(m,0);
-	myMat = new Matrix(m);
-	myMat->InvertMatrix();
+	if(type != Light){
+		glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
+		double m[16];
+		this->getMatrix(m,0);
+		myMat = new Matrix(m);
+		myMat->InvertMatrix();
+	}
 
 }

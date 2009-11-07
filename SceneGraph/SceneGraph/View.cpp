@@ -16,7 +16,7 @@ void View::init3D(){
 	glViewport(0, 0, w(), h());
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45, (float)w()/(float)h(), .05, 30.0);
+    gluPerspective(40, (float)w()/(float)h(), .05, 30.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     

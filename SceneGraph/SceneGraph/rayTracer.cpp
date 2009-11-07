@@ -289,11 +289,12 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 			if(obj->getObject() == 5||obj->getObject() == 6
 				||obj->getObject() == 0||obj->getObject() == 10){
 				getColor(dir,color,normal,point,obj,t_depth);
+					
 			}
 			else if(obj->getObject() == 12){
-				color[0] = 1;
+				/*color[0] = 1;
 				color[1] = 1;
-				color[2] = 1;
+				color[2] = 1;*/
 			}
 			else{
 				color[0] = obj->transforms->getR();
@@ -453,8 +454,8 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 		float tdist = light.length();
 		light = light * (1.0/tdist);
 
-		bool intersect = RayTraceShadow(p0+(light*EPSILON),light,root);
-		if(intersect) shade = 0;
+		//bool intersect = RayTraceShadow(p0+(light*EPSILON),light,root);
+		//if(intersect) shade = 0;
 		
 		// calculation to add diffuse component to ray color
 		float diff = d * obj->transforms->getDiffuse()*shade;
