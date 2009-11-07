@@ -246,6 +246,26 @@ GUI::importCB2(){
 
 }
 
+void
+GUI::choose_renderCB2(){
+	string filename;
+	Fl_File_Chooser chooser(".","Valid Files (*.{txt})",Fl_File_Chooser::SINGLE, "Open file?");
+	chooser.show();
+	while(chooser.shown()){ Fl::wait(); }
+
+	if ( chooser.value() != NULL ){
+		filename = chooser.value();
+		Open_Config(filename);
+		bool load = true;
+		if(!load){
+			char msg[] = "Sorry. Invalid file.";
+			fl_alert(msg);
+		}
+	}
+	view->redraw();
+
+}
+
 void 
 GUI::renderCB2(){
 	control->render();
@@ -291,10 +311,15 @@ GUI::GUI(){
 		import->color(FL_GREEN);
 		import->callback((Fl_Callback*)importCB, this);
 
-		render = new Fl_Button(790, 10, 80, 30, "Render");
+		/*render = new Fl_Button(790, 10, 80, 30, "Render");
 		render->box(FL_PLASTIC_UP_BOX);
 		render->color(FL_YELLOW);
-		render->callback((Fl_Callback*)renderCB, this);
+		render->callback((Fl_Callback*)renderCB, this);*/
+
+		choose_render = new Fl_Button(790, 10, 80, 30, "Render");
+		choose_render->box(FL_PLASTIC_UP_BOX);
+		choose_render->color(FL_YELLOW);
+		choose_render->callback((Fl_Callback*)choose_renderCB, this);
 
 		transfMenu = new Fl_Menu_Button(20, 60, 80, 30, "Edit");
 		Fl_Menu_Item items_edit[] = {

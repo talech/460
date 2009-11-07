@@ -24,6 +24,7 @@ SceneGraph - Room Editor
 #include "Controller.h"
 #include "inputButton.h"
 #include "algebra3.h"
+#include "config.h"
 
 
 
@@ -37,6 +38,7 @@ private:
 	Fl_Button* render;
 	Fl_Button* import;
 	Fl_File_Chooser* choose_import;
+	Fl_Button* choose_render;
 
 	
 	Fl_Menu_Button* transfMenu;
@@ -131,6 +133,11 @@ private:
 	{  ((GUI*)gui)->importCB2();}
 	
 	void importCB2();
+
+	static void choose_renderCB(Fl_Widget* w, void* gui)
+	{  ((GUI*)gui)->choose_renderCB2();}
+	
+	void choose_renderCB2();
 
 	static void renderCB(Fl_Widget* w, void* gui)
 	{  ((GUI*)gui)->renderCB2();}

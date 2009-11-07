@@ -214,7 +214,7 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 	}
 	else{
 		//Root = floor
-		if(obj->getObject() == 0){
+		/*if(obj->getObject() == 0){
 			double p1[3] = {5,0,5};
 			double p2[3] = {5,0,-5};
 			double p3[3] = {-5,0,-5};
@@ -222,38 +222,14 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 			double t1 = Test_RayPlaneIntersect(o,d,p1,p2,p3,p4,mat,normal,point);
 			
 			t = t1;
-			/*if(t1>=0){
-				color[0] = .35;
-				color[1] = .18;
-				color[2] = .07;
-			}
-
-			double p5[3] = {5,5,5};
-			double p6[3] = {5,5,-5};
-			double t2 = Test_RayPlaneIntersect(o,d,p1,p5,p6,p2,mat,normal,point);
-			if(t2>=0 && t2<t) t = t2; 
-
-			double p7[3] = {-5,5,-5};
-			double t3 = Test_RayPlaneIntersect(o,d,p2,p6,p7,p3,mat,normal,point);
-			if(t3>=0 && t3<t) t = t3;
-
-			double p8[3] = {-5,5,5};
-			double t4 = Test_RayPlaneIntersect(o,d,p3,p3,p8,p4,mat,normal,point);
-			if(t4>=0 && t4<t) t = t4;
-
-			if(t != t1){
-				color[0] = obj->transforms->getR();
-				color[1] = obj->transforms->getG();
-				color[2] = obj->transforms->getB();
-			}*/
-		}
+		}*/
 		//Meshes
 		//Find bounding box, given by the max and min x, y and z
 		//test for each of the planes until find one that intersects
 		//no need to find the closest only if there is intersection or not
 		//if there is at least one intersection then test for every 
 		//polygon in the mesh, if no intersection t = -1
-		else if(obj->getObject() == 10){
+		if(obj->getObject() == 10){
 			vec3 min, max;
 			obj->myMesh->findBoundingBox(max,min);
 			double p1[3] = {max[0],min[1],max[2]};	double p2[3] = {max[0],max[1],max[2]};
