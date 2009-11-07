@@ -1,7 +1,11 @@
 SceneGraph/SceneGraph/Debug/
+SceneGraph\SceneGraph\Debug\
 SceneGraph/SceneGraph.ncb
 SceneGraph/SceneGraph.suo
+SceneGraph\SceneGraph.ncb
+SceneGraph\SceneGraph.suo
 SceneGraph/debug/
+SceneGraph\debug\
 obj
 bin
 *.suo
@@ -11,3 +15,7 @@ bin
 *.pdb
 *.ilk
 *.exe
+*.obj
+*.dep
+*.bsc
+
