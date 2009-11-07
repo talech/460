@@ -270,7 +270,7 @@ void View::passEvent(int e){
 void View::changeView(Config *c){
 	glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-	gluPerspective(c->fovy, (float)c->resolution[0]/(float)c->resolution[1], .05, 30.0);
+	gluPerspective(c->fovy, (float)c->resolution[0]/(float)c->resolution[1], .05, 60.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

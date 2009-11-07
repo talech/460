@@ -16,7 +16,7 @@
 
 using namespace std;
 
-#define TRACEDEPTH	6
+#define TRACEDEPTH	5
 
 #define PI			3.141592653589793238462f
 #define EPSILON		0.0001f
@@ -35,6 +35,8 @@ private:
 	void getColor(vec3 &dir,vec3& color, vec3& normal,vec3& point,ObjectNode* obj,int t_depth);
 	void RayTrace(vec3& origin, vec3& dir, vec3& color,ObjectNode* obj,int t_depth);
 	bool RayTraceShadow(vec3 &origin, vec3 &dir,ObjectNode* obj);
+
+	
 
 
 public:

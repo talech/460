@@ -18,12 +18,13 @@ Controller::Controller(){
 	
 	
 	root->setSelected();
- 	root->transforms->setTransX(-5);
+ 	root->transforms->setTransX(0);
  	root->transforms->setTransY(12);
- 	root->transforms->setTransZ(12.5);
-	root->transforms->putScaleX(.5);
-	root->transforms->putScaleY(.5);
- 	root->transforms->putScaleZ(.5);
+ 	root->transforms->setTransZ(0);
+	root->transforms->putScaleX(2);
+	root->transforms->putScaleY(2);
+ 	root->transforms->putScaleZ(2);
+	root->transforms->setColor(1,1,1);
  
 	addNode("Root Node",0,0);
 
