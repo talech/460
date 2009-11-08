@@ -1,3 +1,11 @@
+/*****************************
+Tamara Levy
+CIS 460
+November, 2008
+Updated: Nov 7, 2009
+Ray Tracer
+******************************/
+
 #ifndef RAYTRACER_H
 #define RAYTRACER_H
 
@@ -12,6 +20,10 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
+
+#include <FL/Fl_Window.h>
+#include <FL/Fl_Progress.H>
+
 
 
 using namespace std;
@@ -43,7 +55,7 @@ public:
 	Tracer(ObjectNode* r, char* fileName, Config* c);
 	void setDimensions(int w, int h);
 	void InitRender();
-	void Render();
+	void Render(void* data);
 	
 
 };

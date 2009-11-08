@@ -183,6 +183,25 @@ ObjectNode::drawObject(int select){
 		}
 		drawMe(select);
 	}
+
+	//**********************************
+	// Draw coord system for reference
+	// x = blue, y = red, z = green
+	/*glPushMatrix();
+	glTranslated(0,5,4);
+	glGetDoublev(GL_MODELVIEW_MATRIX,mat[0]);
+	GLfloat red[] = {1.0,0.0,0.0, 1.0};
+	GLfloat blue[] = {0.0,0.0,1.0, 1.0};
+	GLfloat green[] = {0.0,1.0,0.0, 1.0};
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, red);
+    glBegin(GL_LINE_STRIP); glVertex3f(0,0,0); glVertex3f(0,1,0); glEnd();
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, blue);
+    glBegin(GL_LINE_STRIP); glVertex3f(0,0,0); glVertex3f(1,0,0); glEnd();
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, green);
+    glBegin(GL_LINE_STRIP); glVertex3f(0,0,0); glVertex3f(0,0,1); glEnd();
+	glPopMatrix();*/
+	//**************************************
+
 	glPopMatrix();
 	
 }

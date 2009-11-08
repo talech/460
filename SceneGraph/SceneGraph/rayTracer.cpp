@@ -24,8 +24,18 @@ Tracer::InitRender(){
 }
 
 void
-Tracer::Render(){
-	
+Tracer::Render(void* data){
+	int step;
+	int total;
+
+	// Make the progress bar
+	Fl_Window *w = (Fl_Window*)data;    // access parent window
+	w->begin();                         // add progress bar to it..
+	Fl_Progress *progress = new Fl_Progress(670,10,200,30);
+	progress->minimum(0);               // set progress bar attribs..
+	progress->maximum(1);
+	w->end();                           // end of adding to window
+
 	//double mat[16];
 
 	//root->getMatrix(mat,0);
@@ -75,12 +85,13 @@ Tracer::Render(){
 	  indexb = barray;
 
 
-	
-
 	for(int y=0; y<height; y++){
 		
+		progress->value((float)y/(float)height);       // update progress bar
+		Fl::check();
 		SX = WX1;
 		for(int x=0; x<width; x++){
+			
 			/*std::cout<<"SX: "<<SX<<"  ";
 			std::cout<<"SY: "<<SY<<std::endl;*/
 			vec3 color(0,0,0);
@@ -120,10 +131,14 @@ Tracer::Render(){
 			indexg = indexg + 1;
 			indexb = indexb + 1;
 			/*std::cout<<"\n";*/
-			//RTSTEP++;
+			
+			
+			                   
+
 		}
 		//myfile<<"\n---------------\n";
 		SY+=DY;
+		
 	}
 	std::cout<<"DONE\n";
 	//RTDONE = true;
@@ -159,6 +174,11 @@ Tracer::Render(){
 	  error = false;
 	  //return error;
 	# undef VERBOSE
+
+	// Cleanup Progress Bar
+	w->remove(progress);                // remove progress bar from window
+	delete(progress);                   // deallocate it                   // reactivate button
+	w->redraw();
 }
 
 void
@@ -311,14 +331,12 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 
 bool
 Tracer::IntersectTestShadow(vec3 &origin, vec3 &dir,ObjectNode* obj){
-	//double mat[16];
 	double o[3] = {origin[0],origin[1],origin[2]};
 	double d[3] = {dir[0],dir[1],dir[2]};
 	double t = -1;
 	vec3 normal(0,0,0);
 	vec3 point(0,0,0);
 
-	//obj->getMatrix(mat,0);
 	Matrix* mat;
 	mat = obj->getMyMatrix();
 	
@@ -414,17 +432,12 @@ Tracer::IntersectTestShadow(vec3 &origin, vec3 &dir,ObjectNode* obj){
 
 void
 Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* obj,int t_depth){
-	//double mLight[16];
 	Matrix* mL;
-	//root->getMatrix(mLight,0);
 	mL = root->getMyMatrix();
-	//Matrix mL(mLight);
 	vec4 L0(0,0,0,1);
 	L0 = mL->multiply(L0);
 	vec3 L0_3(L0[0],L0[1],L0[2]);
-	//double mat[16];
-	//obj->getMatrix(mat,0);
-	//Matrix m(mat);
+	
 	Matrix* m;
 	m = obj->getMyMatrix();
 	float shade = 1;
@@ -479,54 +492,6 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 		lit_color[0] += .2*obj->transforms->getR();
 		lit_color[1] += .2*obj->transforms->getG();
 		lit_color[2] += .2*obj->transforms->getB();
-
-		/*std::cout<<"Normal x : "<<"= "<<normal[0]<<std::endl;
-		std::cout<<"Normal y : "<<"= "<<normal[1]<<std::endl;
-		std::cout<<"Normal z : "<<"= "<<normal[2]<<"\n"<<std::endl;*/
-		//float d = normal*L; //N dot L
-		//if(obj->getObject() == 10 && !obj->myMesh->isConvex()){
-		//	if(d<0){
-		//		d = fabs(d);
-		//		d = 1-d;
-		//	}
-		//}
-		//
-		////calculations to add specular highlights
-		//vec4 r0(0,0,0,1);
-		//vec4 v0(dir[0],dir[1],dir[2],0);
-		//vec4 r1;
-		//r1 = r0 + v0;
-		//r0 = m->multiplyInverse(r0);
-		//r1 = m->multiplyInverse(r1);
-		////recalculate v0
-		//v0 = r1 - r0;
-
-		//vec3 w_Dir(v0[0],v0[1],v0[2]);
-		//vec3 lR = L - (2.0 * d * normal);
-		//vec3 H = (L+w_Dir);
-		//H = H/ H.length();
-		//float dot = w_Dir*lR;
-		////if(dot<0) dot = 0;
-		//float spec = powf(dot,4)*obj->transforms->getSpecular()*shade;
-
-		////if(d<0) d = 0; //ensure to have max(0, N dot L)
-		//// calculation to add diffuse component to ray color
-		//float diff = d * obj->transforms->getDiffuse()*shade;
-
-		//// add diffuse component to ray color
-		//if(obj->transforms->getDiffuse()>0 && d>0){
-		//	color[0] += diff*obj->transforms->getR();
-		//	color[1] += diff*obj->transforms->getG();
-		//	color[2] += diff*obj->transforms->getB();
-		//}
-		////add specular highlights
-		//if(obj->transforms->getSpecular()>0 && dot>0){
-		//	color[0] += spec*obj->transforms->getR();
-		//	color[1] += spec*obj->transforms->getG();
-		//	color[2] += spec*obj->transforms->getB();
-		//}
-		
-		
 		
 		//////////////*****************////////////////////
 		// calculate reflection
@@ -561,9 +526,9 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 					
 					
 					RayTrace(orig,R,rcol,root,t_depth+1);					
-					color[0] += refl * rcol[0];// * obj->transforms->getR();
-					color[1] += refl * rcol[1];//* * obj->transforms->getG();
-					color[2] += refl * rcol[2];//* * obj->transforms->getB();
+					color[0] += refl * rcol[0];
+					color[1] += refl * rcol[1];
+					color[2] += refl * rcol[2];
 					//cout<<"RColor: r = "<<rcol[0]<<" g = "<<rcol[1]<<" b = "<<rcol[2]<<endl;
 					//cout<<"Color: r = "<<color[0]<<" g = "<<color[1]<<" b = "<<color[2]<<endl;
 					

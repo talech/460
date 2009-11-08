@@ -277,6 +277,7 @@ void View::changeView(Config *c){
 	gluLookAt(c->eyePos[0],c->eyePos[1],c->eyePos[2],
 		c->vDir[0],c->vDir[1],c->vDir[2],
 		c->uVec[0],c->uVec[1],c->uVec[2]);
+	control->matrixObject();
 }
 void View::resetView(){
 	glMatrixMode(GL_PROJECTION);

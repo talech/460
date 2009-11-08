@@ -1,6 +1,16 @@
 #include "GUI.h"
 #include <iostream>
 
+#ifdef _WIN32
+// WINDOWS
+#include <windows.h>
+#define usleep(v) Sleep(v/1000)
+#else
+// UNIX
+#include <unistd.h>                     // usleep
+#endif
+
+
 //Adds a new Item to TreeView and calls the add method in 
 //Controller which will add the proper node depending
 //on the selection.
@@ -262,9 +272,14 @@ GUI::choose_renderCB2(){
 			fl_alert(msg);
 		}
 		else{
+			
+			//Call render functions
 			view->changeView(c);
-			control->render(c);
 			view->resetView();
+			control->render(c,window);
+			
+
+			   
 		}
 
 	}

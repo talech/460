@@ -9,6 +9,7 @@ SceneGraph - Room Editor
 #define GUI_H
 
 #include <FL/Fl_Window.h>
+#include <FL/Fl_Progress.H>
 #include <FL/Fl_Counter.h>
 #include <FL/Fl_Button.h>
 #include <FL/Fl_Menu_Button.h>
@@ -20,8 +21,13 @@ SceneGraph - Room Editor
 #include <FL/fl_draw.H>
 #include <string>
 
+#ifndef VIEW_H
 #include "View.h"
+#endif
+
+#ifndef CONTROLLER_H
 #include "Controller.h"
+#endif
 #include "inputButton.h"
 #include "algebra3.h"
 
@@ -65,6 +71,8 @@ private:
 	}
 
 	void addCB2();
+
+	
 
 	static void transfCB(Fl_Button* button, void* gui){
 		((GUI*)gui)->transfCB2();
@@ -149,6 +157,8 @@ public:
 	View* view;
 	GUI();
 	
+	void startProgressCB();
+	void progressCB(int total, int step);
 };
 
 #endif

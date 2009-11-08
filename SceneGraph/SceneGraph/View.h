@@ -28,7 +28,9 @@ SceneGraph - Room Editor
 
 #include "glWindow.h"
 #include "camera.h"
+#ifndef CONTROLLER_H
 #include "Controller.h"
+#endif
 #include <Fl/Gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
