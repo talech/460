@@ -190,6 +190,8 @@ public:
 	void matrixObject();
 	Matrix* getMyMatrix(){return myMat;}
 	
+	void assignMaterial(float r, float g, float b, float ref, float spec);
+	
 
 
 

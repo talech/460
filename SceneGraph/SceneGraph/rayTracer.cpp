@@ -42,11 +42,7 @@ Tracer::Render(void* data){
 	Matrix* mat;
 	mat = root->getMyMatrix();
 	
-	/*myfile<<"MAT\n";	
-	for(int i=0; i<16; i++){
-		myfile<<mat[i]<<" ";}
-	myfile << "\nStart.\n";
-	*/
+	
 	//file_out_name = "test#10.bmp";
 	vec3 origin(0,0,0);
 	//vec3 origin = config->eyePos;
@@ -177,7 +173,7 @@ Tracer::Render(void* data){
 
 	// Cleanup Progress Bar
 	w->remove(progress);                // remove progress bar from window
-	delete(progress);                   // deallocate it                   // reactivate button
+	delete(progress);                   // deallocate it                   
 	w->redraw();
 }
 
@@ -245,7 +241,7 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 	}
 	else{
 		//Root = floor
-		if(obj->getObject() == 0){
+		/*if(obj->getObject() == 0){
 			double p1[3] = {5,0,5};
 			double p2[3] = {5,0,-5};
 			double p3[3] = {-5,0,-5};
@@ -253,7 +249,7 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 			double t1 = Test_RayPlaneIntersect(o,d,p1,p2,p3,p4,mat,normal,point);
 			
 			t = t1;
-		}
+		}*/
 		//Meshes
 		//Find bounding box, given by the max and min x, y and z
 		//test for each of the planes until find one that intersects
@@ -307,14 +303,14 @@ Tracer::IntersectTest(vec3 &origin, vec3 &dir, vec3 &color,ObjectNode* obj,int t
 		if(t <= smallestT[t_depth]){
 			smallestT[t_depth] = t;
 			if(obj->getObject() == 5||obj->getObject() == 6
-				||obj->getObject() == 0 ||obj->getObject() == 10){
+				||/*obj->getObject() == 0 ||*/obj->getObject() == 10){
 				getColor(dir,color,normal,point,obj,t_depth);
 					
 			}
 			else if(obj->getObject() == 12){
-				color[0] = 1;
-				color[1] = 1;
-				color[2] = 1;
+				color[0] = config->lCol[0];
+				color[1] = config->lCol[1];
+				color[2] = config->lCol[2];
 			}
 			else{
 				color[0] = obj->transforms->getR();
@@ -349,39 +345,16 @@ Tracer::IntersectTestShadow(vec3 &origin, vec3 &dir,ObjectNode* obj){
 		}
 	}
 	else{
-		if(obj->getObject() == 0){
+		/*if(obj->getObject() == 0){
 			double p1[3] = {5,0,5};
 			double p2[3] = {5,0,-5};
 			double p3[3] = {-5,0,-5};
 			double p4[3] = {-5,0,5};
 			double t1 = Test_RayPlaneIntersect(o,d,p1,p2,p3,p4,mat,normal,point);
 			t = t1;
-			/*if(t1>=0){
-				color[0] = .35;
-				color[1] = .18;
-				color[2] = .07;
-			}
-
-		//	double p5[3] = {5,5,5};
-		//	double p6[3] = {5,5,-5};
-		//	double t2 = Test_RayPlaneIntersect(o,d,p1,p5,p6,p2,mat,normal,point);
-		//	if(t2>=0 && t2<t) t = t2; 
-
-		//	double p7[3] = {-5,5,-5};
-		//	double t3 = Test_RayPlaneIntersect(o,d,p2,p6,p7,p3,mat,normal,point);
-		//	if(t3>=0 && t3<t) t = t3;
-
-		//	double p8[3] = {-5,5,5};
-		//	double t4 = Test_RayPlaneIntersect(o,d,p3,p3,p8,p4,mat,normal,point);
-		//	if(t4>=0 && t4<t) t = t4;
-
-		//	if(t != t1){
-		//		color[0] = obj->transforms->getR();
-		//		color[1] = obj->transforms->getG();
-		//		color[2] = obj->transforms->getB();
-		//	}*/
+			
 		}
-		else if(obj->getObject() == 10){
+		else */if(obj->getObject() == 10){
 			vec3 min, max;
 			obj->myMesh->findBoundingBox(max,min);
 			double p1[3] = {max[0],min[1],max[2]};	double p2[3] = {max[0],max[1],max[2]};
@@ -462,9 +435,9 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 		vec3 lit_color(0,0,0);
 		float diffuse = normal*L; //N dot L
 		if(shade>0){ //not occluded
-			lit_color[0] += diffuse*obj->transforms->getR()*root->transforms->getR();
-			lit_color[1] += diffuse*obj->transforms->getG()*root->transforms->getG();
-			lit_color[2] += diffuse*obj->transforms->getB()*root->transforms->getB();
+			lit_color[0] += diffuse*obj->transforms->getR()*config->lCol[0];
+			lit_color[1] += diffuse*obj->transforms->getG()*config->lCol[1];
+			lit_color[2] += diffuse*obj->transforms->getB()*config->lCol[2];
 
 			//calculations to add specular highlights
 			vec4 r0(0,0,0,1);
@@ -483,15 +456,15 @@ Tracer::getColor(vec3 &dir, vec3& color, vec3& normal,vec3& point,ObjectNode* ob
 			lR = lR-L;
 			float dot = w_Dir*lR;
 			if(dot<0) dot = 0;
-			float spec = powf(dot,4);
+			float spec = powf(dot,obj->transforms->getSpecular());
 
-			lit_color[0] += refl*spec*root->transforms->getR();
-			lit_color[1] += refl*spec*root->transforms->getG();
-			lit_color[2] += refl*spec*root->transforms->getB();
+			lit_color[0] += refl*spec*config->lCol[0];
+			lit_color[1] += refl*spec*config->lCol[1];
+			lit_color[2] += refl*spec*config->lCol[2];
 		}
-		lit_color[0] += .2*obj->transforms->getR();
-		lit_color[1] += .2*obj->transforms->getG();
-		lit_color[2] += .2*obj->transforms->getB();
+		lit_color[0] += config->aCol[0]*obj->transforms->getR();
+		lit_color[1] += config->aCol[1]*obj->transforms->getG();
+		lit_color[2] += config->aCol[2]*obj->transforms->getB();
 		
 		//////////////*****************////////////////////
 		// calculate reflection

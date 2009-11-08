@@ -28,7 +28,7 @@ Controller::Controller(){
  
 	addNode("Root Node",0,0);
 
-
+	configSet = false;
 
 	
 
@@ -126,10 +126,10 @@ Controller::PrintGraph(){
 	ObjectNode* temp = selected;
 
 	cout<<"\n";	
-	if(temp == root)
+	/*if(temp == root)
 		cout<<">> **"<<root->nodeName()<<"** ";
 	else
-		cout<<">> "<<root->nodeName()<<" ";
+		cout<<">> "<<root->nodeName()<<" ";*/
 	selected = root;
 	
 	do{
@@ -229,11 +229,14 @@ Controller::addMesh(const std::string &filename){
 }
 
 void 
-Controller::render(Config* c,void* data){
+Controller::render(void* data){
 	//all matrix calculations are done before calling ray tracer to improve performance
-	
-	Tracer* trace = new Tracer(root, c->file, c);
-	trace->setDimensions(c->resolution[0],c->resolution[1]);
+	root->transforms->setTransX(config->lPos[0]);
+ 	root->transforms->setTransY(config->lPos[1]);
+ 	root->transforms->setTransZ(config->lPos[2]);
+
+	Tracer* trace = new Tracer(root, config->file, config);
+	trace->setDimensions(config->resolution[0],config->resolution[1]);
 	trace->InitRender();
 	trace->Render(data);
 }
@@ -295,4 +298,18 @@ Controller::s_nextSib(){
 	}
 }
 
-
+void 
+Controller::assignMaterial(int i){
+	if(configSet && selected->getShape() != 0){
+		if (i==1){
+			selected->assignMaterial(config->mat1[0],config->mat1[1],config->mat1[2],config->mat1[4],config->mat1[3]);
+		}
+		else if (i==2){
+			selected->assignMaterial(config->mat2[0],config->mat2[1],config->mat2[2],config->mat2[4],config->mat2[3]);
+		}
+		else if (i==3){
+			selected->assignMaterial(config->mat3[0],config->mat3[1],config->mat3[2],config->mat3[4],config->mat3[3]);
+		}
+	}
+	
+}

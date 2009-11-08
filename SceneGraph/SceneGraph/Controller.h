@@ -27,7 +27,9 @@ SceneGraph - Room Editor
 class Controller{
 private:
 	ObjectNode* root;
-	
+	Config* config;
+
+	bool configSet;
 	
 	void NextNodeHelp();
 	void PrintHelp(ObjectNode* node);
@@ -53,7 +55,7 @@ public:
 	bool addMesh(const std::string& filename);
 	void loadTexture(char* Filename, int num){ root->LoadGLTextures(Filename, num);}
 	
-	void render(Config* c,void *data );
+	void render( void* data);
 
 	void setDiffuse(float d){ selected->transforms->setDiffuse(d);}
 	void setSpecular(float s){ selected->transforms->setSpecular(s);}
@@ -68,6 +70,9 @@ public:
 	void s_nextSib();
 
 	void matrixObject(){root->matrixObject();}
+	void assignMaterial(int i);
+	
+	void setConfig(Config* c ){config = c; configSet = true;}
 };
 
 

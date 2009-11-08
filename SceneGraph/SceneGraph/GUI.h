@@ -43,6 +43,7 @@ private:
 	Fl_Button* clone;
 	Fl_Button* render;
 	Fl_Button* import;
+	Fl_Button* save;
 	Fl_File_Chooser* choose_import;
 	Fl_Button* choose_render;
 
@@ -71,6 +72,12 @@ private:
 	}
 
 	void addCB2();
+
+	static void saveCB(Fl_Button* button, void* gui){
+		((GUI*)gui)->saveCB2();
+	}
+
+	void saveCB2();
 
 	
 

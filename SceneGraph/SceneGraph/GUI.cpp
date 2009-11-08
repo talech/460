@@ -24,22 +24,22 @@ GUI::addCB2(){
 	else if(v == 2){
 		control->addNode("Desk",2,1);
 	}
-	else if(v == 3){
+	/*else if(v == 3){
 		control->addNode("Lamp",3,1);
-	}
-	else if(v == 4){
+	}*/
+	else if(v == 3){
 		control->addNode("Cabinet",4,1);
 	}
-	else if(v == 5){
+	/*else if(v == 5){
 		control->addNode("Monitor",11,1);
-	}
-	else if(v == 8){
+	}*/
+	else if(v == 6){
 		control->addNode("Sphere",5,2);
 	}
-	else if(v == 9){
+	else if(v == 7){
 		control->addNode("Cube",6,2);
 	}
-	else if(v == 10){
+	/*else if(v == 10){
 		control->addNode("Cylinder",7,2);
 	}
 	else if(v == 11){
@@ -47,7 +47,7 @@ GUI::addCB2(){
 	}
 	else if(v == 12){
 		control->addNode("Disk",9,2);
-	}
+	}*/
 	
 	view->redraw();
 }
@@ -204,9 +204,9 @@ GUI::selectCB2(){
 	else control->counter = 1;
 	view->redraw();
 	//update values
-	diffuse->value(control->selected->transforms->getDiffuse());
+	//diffuse->value(control->selected->transforms->getDiffuse());
 	reflection->value(control->selected->transforms->getReflection());
-	specular->value(control->selected->transforms->getSpecular());
+	//specular->value(control->selected->transforms->getSpecular());
 	
 	
 
@@ -272,11 +272,13 @@ GUI::choose_renderCB2(){
 			fl_alert(msg);
 		}
 		else{
-			
+			char msg[] = "Please assign material 1, 2, or 3, by clicking 5,6,7.\n This will assign the materials to the currently selected object.\nWhen ready click Save to begin ray tracing.\nThe objects without a material assigned will be rendered with the color you see and the default values of spec and refl to 0.";
+			fl_alert(msg);
 			//Call render functions
 			view->changeView(c);
 			view->resetView();
-			control->render(c,window);
+			control->setConfig(c);
+			
 			
 
 			   
@@ -285,6 +287,11 @@ GUI::choose_renderCB2(){
 	}
 	view->redraw();
 
+}
+void 
+GUI::saveCB2(){
+	control->render(window);
+	view->redraw();
 }
 
 void 
@@ -337,7 +344,12 @@ GUI::GUI(){
 		render->color(FL_YELLOW);
 		render->callback((Fl_Callback*)renderCB, this);*/
 
-		choose_render = new Fl_Button(790, 10, 80, 30, "Render");
+		save = new Fl_Button(690, 10, 80, 30, "Save");
+		save->box(FL_PLASTIC_UP_BOX);
+		save->color(FL_RED);
+		save->callback((Fl_Callback*)saveCB, this);
+
+		choose_render = new Fl_Button(790, 10, 80, 30, "&Render");
 		choose_render->box(FL_PLASTIC_UP_BOX);
 		choose_render->color(FL_YELLOW);
 		choose_render->callback((Fl_Callback*)choose_renderCB, this);
@@ -383,7 +395,7 @@ GUI::GUI(){
 		rotate2->hide();
 
 		tagMaterial = new Fl_Box(100,240,20,15,"Material Values\nfor Rendering");
-		diffuse = new Fl_Value_Slider(20,280,200,25,"Diffuse");
+		/*diffuse = new Fl_Value_Slider(20,280,200,25,"Diffuse");
 		diffuse->type(FL_HOR_NICE_SLIDER);
 		diffuse->box(FL_PLASTIC_UP_BOX);
 		diffuse->bounds(0,1);
@@ -396,9 +408,9 @@ GUI::GUI(){
 		specular->box(FL_PLASTIC_UP_BOX);
 		specular->bounds(0,1);
 		specular->color(FL_DARK_RED);
-		specular->callback((Fl_Callback*)cbSpecular, this);
+		specular->callback((Fl_Callback*)cbSpecular, this);*/
 
-		reflection = new Fl_Value_Slider(20,380,200,25,"Reflection");
+		reflection = new Fl_Value_Slider(20,280,200,25,"Reflection");
 		reflection->type(FL_HOR_NICE_SLIDER);
 		reflection->box(FL_PLASTIC_UP_BOX);
 		reflection->bounds(0,1);

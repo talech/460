@@ -210,47 +210,56 @@ int View::handle(int e){
 				case 'o':
 					control->rotate(0,0,30);
 					break;
+				case '5':
+					control->assignMaterial(1);
+					break;
+				case '6':
+					control->assignMaterial(2);
+					break;
+				case '7':
+					control->assignMaterial(3);
+					break;
 			}	
 		}
 	}
 	
-	if(e == FL_PUSH)
-	{
-		if(Fl::event_button()==1)//leftclick
-		{
-			lOffX = Fl::event_x();
-			lOffY = Fl::event_y();
-			leftButton = true;
-		}
-		else if(Fl::event_button()==3)//rightclick
-		{
-			rOffX = Fl::event_x();
-			rOffY = Fl::event_y();
-			leftButton = false;
-		}
-		return 1;
-	}
-	else if(e==FL_RELEASE){
-		return 1;
-	}
-	else if(e==FL_DRAG)
-	{
-		if(leftButton)//rotate
-		{
-			myCamera.rotateUpDown((Fl::event_y()-lOffY));
-			myCamera.rotateRightLeft(-(Fl::event_x()-lOffX));
-			lOffX = Fl::event_x();
-			lOffY = Fl::event_y();
-			redraw();
-		}
-		else//zoom
-		{
-			myCamera.zoom((Fl::event_y()-rOffY)/10);
-			rOffY = Fl::event_y();
-			redraw();
-		}
-		return 1;
-	}
+	//if(e == FL_PUSH)
+	//{
+	//	if(Fl::event_button()==1)//leftclick
+	//	{
+	//		lOffX = Fl::event_x();
+	//		lOffY = Fl::event_y();
+	//		leftButton = true;
+	//	}
+	//	else if(Fl::event_button()==3)//rightclick
+	//	{
+	//		rOffX = Fl::event_x();
+	//		rOffY = Fl::event_y();
+	//		leftButton = false;
+	//	}
+	//	return 1;
+	//}
+	//else if(e==FL_RELEASE){
+	//	return 1;
+	//}
+	//else if(e==FL_DRAG)
+	//{
+	//	if(leftButton)//rotate
+	//	{
+	//		myCamera.rotateUpDown((Fl::event_y()-lOffY));
+	//		myCamera.rotateRightLeft(-(Fl::event_x()-lOffX));
+	//		lOffX = Fl::event_x();
+	//		lOffY = Fl::event_y();
+	//		redraw();
+	//	}
+	//	else//zoom
+	//	{
+	//		myCamera.zoom((Fl::event_y()-rOffY)/10);
+	//		rOffY = Fl::event_y();
+	//		redraw();
+	//	}
+	//	return 1;
+	//}
 
 	redraw();
 	return (ret);

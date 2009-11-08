@@ -658,3 +658,20 @@ ObjectNode::myMatrix(){
 	}
 
 }
+
+void 
+ObjectNode::assignMaterial(float r, float g, float b, float ref, float spec){
+	if(numChildren() == 0){
+		transforms->setColor(r,g,b);
+		transforms->setReflection(ref);
+		transforms->setSpecular(spec);
+	}
+	else{
+		for(int i=0; i<children.size(); i++){
+			children[i]->assignMaterial(r,g,b,ref,spec);
+		}
+		transforms->setColor(r,g,b);
+		transforms->setReflection(ref);
+		transforms->setSpecular(spec);
+	}
+}
